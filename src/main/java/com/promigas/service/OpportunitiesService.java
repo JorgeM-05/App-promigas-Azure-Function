@@ -19,27 +19,16 @@ public class OpportunitiesService {
         OpportunitiesDto opportunitiesDto = new OpportunitiesDto();
         List<OpportunitiesEntity> opportunitiesEntity = new ArrayList<OpportunitiesEntity>();
 
-//        UserPort port = new UserAdapter(); //????
         SecretPort secretPort = new SecretAdapter();
         ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
-        System.out.println("Connection:  "+connectionInfo);
 
         OpportunitiesRepositoryImpl opportunitiesRepository = new OpportunitiesRepositoryImpl();
-//        opportunitiesRepository.findOpportunities(connectionInfo);
         opportunitiesEntity= opportunitiesRepository.findOpportunities(connectionInfo);
 
-        System.out.println("send:  numero opor");
         opportunitiesDto.setNumberOpportunities(opportunitiesEntity.size());
-        System.out.println("send:  numero gree");
-
         opportunitiesDto.setNumberGreenfield(countGreen(opportunitiesEntity));
-        System.out.println("send:  numero mya");
-
         opportunitiesDto.setNumberMYA(countMYA(opportunitiesEntity));
-        System.out.println("send:  numero mapto oppor");
-
-//        opportunitiesDto.setOpportunitiesByCountries(mapToOpportunitiesDTO(opportunitiesEntity));
-        System.out.println("send:  fin opor");
+        opportunitiesDto.setOpportunitiesByCountries(mapToOpportunitiesDTO(opportunitiesEntity));
 
         return opportunitiesDto;
     }

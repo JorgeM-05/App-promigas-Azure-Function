@@ -6,31 +6,29 @@ import com.promigas.persistence.entity.OpportunitiesEntity;
 import com.promigas.persistence.entity.SectorEntity;
 import com.promigas.persistence.entity.TypeContractEntity;
 
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OpportunitiesRepositoryImpl extends AbstractRepositoryDatabase{
-    private static final String QUERY_OPPORTUNITIES = "select * from dbo.opportunities op INNER JOIN dbo.country c \n" +
-                                                    "\t\t On c.unique_id = op.id_country \n" +
-                                                    "\t INNER JOIN dbo.type_contract t \n" +
-                                                    "\t\t On t.unique_id = op.type_contract \n" +
-                                                    "\t INNER JOIN dbo.sector s \n" +
-                                                    "\t\t On s.unique_id = op.id_sector;";
+public class opportunitiesByContryImp extends AbstractRepositoryDatabase implements OpportunitiesRepository{
 
-    public List<OpportunitiesEntity> findOpportunities(ConnectionInfo connectionInfo) {
+    private static final String QUERY_OPPORTUNITIES = "select * from dbo.opportunities op \n" +
+            "INNER Join dbo.country c On op.id_country=c.unique_id\n" +
+            "INNER JOIN dbo.type_contract t On t.unique_id = op.type_contract\n" +
+            "\tINNER JOIN dbo.sector s\tOn s.unique_id = op.id_sector\n" +
+            "where c.name_contry = ?";
+    @Override
+    public List<OpportunitiesEntity> findByIdCountry(String country, ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
-        List<OpportunitiesEntity> opportunitiesEntity = new ArrayList<OpportunitiesEntity>();
+        List<OpportunitiesEntity> opportunitiesEntities = new ArrayList<>();
 
         try{
             PreparedStatement oppQuery = connection.prepareStatement(QUERY_OPPORTUNITIES);
+            oppQuery.setString(1,country);
             ResultSet opprs = oppQuery.executeQuery();
 
-            while(opprs.next()){
+            while(opprs.next()) {
                 OpportunitiesEntity opp = new OpportunitiesEntity();
                 SectorEntity sectorEntity = new SectorEntity();
                 TypeContractEntity typeContractEntity = new TypeContractEntity();
@@ -61,15 +59,21 @@ public class OpportunitiesRepositoryImpl extends AbstractRepositoryDatabase{
                 opp.setPropCapexCop(opprs.getString("prop_capex_cop"));
                 opp.setFinancilAsset(opprs.getString("financial_asset"));
 
-                opportunitiesEntity.add(opp);
+                opportunitiesEntities.add(opp);
             }
-            return opportunitiesEntity;
+
+            return opportunitiesEntities;
         }catch(Exception ex){
 //            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         }finally {
             closeConnection();
         }
-
     }
+
+
+//    @Override
+//    public OpportunitiesEntity findById(Integer id, ConnectionInfo connectionInfo) {
+//        return null;
+//    }
 }
