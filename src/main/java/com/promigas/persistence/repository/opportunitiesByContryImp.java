@@ -18,6 +18,7 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
             "INNER JOIN dbo.type_contract t On t.unique_id = op.type_contract\n" +
             "\tINNER JOIN dbo.sector s\tOn s.unique_id = op.id_sector\n" +
             "where c.name_contry = ?";
+    
     @Override
     public List<OpportunitiesEntity> findByIdCountry(String country, ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
@@ -72,8 +73,8 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
     }
 
 
-//    @Override
-//    public OpportunitiesEntity findById(Integer id, ConnectionInfo connectionInfo) {
-//        return null;
-//    }
+    @Override
+    public OpportunitiesEntity findById(Integer id, ConnectionInfo connectionInfo) {
+        return null;
+    }
 }

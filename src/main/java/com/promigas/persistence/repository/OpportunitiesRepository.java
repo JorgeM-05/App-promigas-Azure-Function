@@ -8,5 +8,5 @@ import java.util.List;
 public interface OpportunitiesRepository {
     public List<OpportunitiesEntity> findByIdCountry(String country, ConnectionInfo connectionInfo);
 
-//    public OpportunitiesEntity findById(Integer id, ConnectionInfo connectionInfo);
+    public OpportunitiesEntity findById(Integer id, ConnectionInfo connectionInfo);
 }
