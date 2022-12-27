@@ -76,7 +76,33 @@ public class Function {
         }
     }
 
+    @FunctionName("/details")
+    public HttpResponseMessage details(
+            @HttpTrigger(
+                    name = "req",
+                    methods = {HttpMethod.GET},
+                    authLevel = AuthorizationLevel.ANONYMOUS)
+            HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        final String query = request.getQueryParameters().get("country");
+        final String country = request.getBody().orElse(query);
+        System.out.println("----> " + country);
 
+
+        OpportunitiesAllByCountryDto opportunitiesAllByCountryDto = null;
+        if (country == null) {
+
+        } else {
+            OpportunitiesByCountryService opportunities = new OpportunitiesByCountryService();
+            opportunitiesAllByCountryDto = opportunities.getDataOpportunities(country);
+        }
+
+        if (opportunitiesAllByCountryDto == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
+        } else {
+            return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesAllByCountryDto).build();
+        }
+    }
     @FunctionName("/details-opportunities")
     public HttpResponseMessage detailsOpportunities(
             @HttpTrigger(
@@ -98,10 +124,10 @@ public class Function {
             opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(id);
         }
 
-        if (opportunitiesAllByCountryDto == null) {
+        if (opportunityDetailsDTO == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
         } else {
-            return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesAllByCountryDto).build();
+            return request.createResponseBuilder(HttpStatus.OK).body(opportunityDetailsDTO).build();
         }
     }
 
