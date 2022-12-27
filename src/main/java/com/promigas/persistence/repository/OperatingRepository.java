@@ -2,12 +2,15 @@ package com.promigas.persistence.repository;
 
 import com.promigas.domain.dto.ConnectionInfo;
 import com.promigas.persistence.entity.FiguresFinancial.CapexEntity;
+import com.promigas.persistence.entity.operatingFinancial.DistributionEntity;
+import com.promigas.persistence.entity.operatingFinancial.EnergySolutionEntity;
+import com.promigas.persistence.entity.operatingFinancial.TransportEntity;
 
 import java.util.List;
 
 public interface OperatingRepository {
-    public List<CapexEntity> findByDistribution(int id_opportunity, ConnectionInfo connectionInfo);
-    public List<CapexEntity> findByEnergy(int id_opportunity, ConnectionInfo connectionInfo);
-    public List<CapexEntity> findByTransport(int id_opportunity, ConnectionInfo connectionInfo);
+    public List<DistributionEntity> findByDistribution(int id_opportunity, ConnectionInfo connectionInfo);
+    public List<EnergySolutionEntity> findByEnergy(int id_opportunity, ConnectionInfo connectionInfo);
+    public List<TransportEntity> findByTransport(int id_opportunity, ConnectionInfo connectionInfo);
 
 }
