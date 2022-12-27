@@ -33,7 +33,6 @@ public class DetailsOpportunityService {
         System.out.println("data encontrada :: \n "+opportunities);
 
         List<CapexEntity> capexEntities = repositoryFigures.findByCapex(opportunities.getUnique_id(),connectionInfo);
-        opportunitiesdetailDetailsDTO.getOpportunitiesByCountry();
         List<EbitdaEntity> ebitdaEntities = repositoryFigures.findByEbitda(opportunities.getUnique_id(),connectionInfo);
         List<DividensEntity> dividensEntities = repositoryFigures.findByDividends(opportunities.getUnique_id(),connectionInfo);
         List<FclEntity> fclEntities = repositoryFigures.findByFCL(opportunities.getUnique_id(),connectionInfo);
@@ -43,24 +42,24 @@ public class DetailsOpportunityService {
         List<TirProjectEntity> tirProjectEntities = repositoryFigures.findByTirProject(opportunities.getUnique_id(),connectionInfo);
         List<UtilityEntity> utilityEntities = repositoryFigures.findByUtility(opportunities.getUnique_id(),connectionInfo);
 
-        List<DistributionEntity> distributionEntities = operatingRepository.findByDistribution(opportunities.getUnique_id(),connectionInfo);
-        List<EnergySolutionEntity> energySolutionEntities = operatingRepository.findByEnergy(opportunities.getUnique_id(),connectionInfo);
-        List<TransportEntity> transportEntities = operatingRepository.findByTransport(opportunities.getUnique_id(),connectionInfo);
+//        List<DistributionEntity> distributionEntities = operatingRepository.findByDistribution(opportunities.getUnique_id(),connectionInfo);
+//        List<EnergySolutionEntity> energySolutionEntities = operatingRepository.findByEnergy(opportunities.getUnique_id(),connectionInfo);
+//        List<TransportEntity> transportEntities = operatingRepository.findByTransport(opportunities.getUnique_id(),connectionInfo);
 
 
 
         opportunitiesdetailDetailsDTO.setOpportunitiesByCountry(
-                mapToAll(capexEntity,dividensRepositories,ebitdaEntity,fclEntities,fclShareholder,incomeEntities,
-//                tarifEntities,tirEquityEntities,tirProjectEntities,utilityEntities));
+                mapToAll(capexEntities,ebitdaEntities,dividensEntities,fclEntities,fclShareholderEntities,incomeEntities,
+                tirEquityEntities,tirProjectEntities,utilityEntities));
 
         return opportunitiesdetailDetailsDTO;
     }
 
 
-    public OpportunitiesByCountryDTO mapToAll(List<CapexEntity> capexEntity, List<DividensEntity> dividensEntities,
-                                              List<EbitdaEntity> ebitdaEntity, List<FclEntity> fclEntities,
+    public OpportunitiesByCountryDTO mapToAll(List<CapexEntity> capexEntity,List<EbitdaEntity> ebitdaEntity,
+                                              List<DividensEntity> dividensEntities, List<FclEntity> fclEntities,
                                               List<FclShareholderEntity> fclShareholderEntities,
-                                              List<IncomeEntity> incomeEntities, List<TarifEntity> tarifEntities,
+                                              List<IncomeEntity> incomeEntities,
                                               List<TirEquityEntity> tirEquityEntities, List<TirProjectEntity> tirProjectEntities,
                                               List<UtilityEntity> utilityEntities){
 
@@ -134,12 +133,12 @@ public class DetailsOpportunityService {
         }
         opportunities.setIncomeDTO(incomeDTO);
 
-        for(TarifEntity tarif: tarifEntities){
-            usd.add(tarif.getValueTarifUsd());
-            cop.add(tarif.getValueTarifCop());
-            incomeDTO.setValueCapexUsd(usd);
-            incomeDTO.setValueCapexCop(cop);
-        }
+//        for(TarifEntity tarif: tarifEntities){
+//            usd.add(tarif.getValueTarifUsd());
+//            cop.add(tarif.getValueTarifCop());
+//            incomeDTO.setValueCapexUsd(usd);
+//            incomeDTO.setValueCapexCop(cop);
+//        }
 //        opportunities.setT(incomeDTO);
 
         return opportunities;
