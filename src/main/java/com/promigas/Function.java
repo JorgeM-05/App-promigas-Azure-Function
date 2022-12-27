@@ -76,40 +76,16 @@ public class Function {
         }
     }
 
-    @FunctionName("ms1")
-    public HttpResponseMessage ms1(
-            @HttpTrigger(
-                    name = "ms1",
-                    methods = {HttpMethod.GET},
-                    authLevel = AuthorizationLevel.ANONYMOUS)
-            HttpRequestMessage<Optional<String>> request,
-            final ExecutionContext context) {
-        try {
-
-           int numeroCaso = Integer.valueOf(request.getQueryParameters().get("numeroCaso"));
-
-            System.out.println("num caso: "+numeroCaso);
-            if (numeroCaso!=0 ){
-
-            }
-
-        } catch (Exception e) {
-
-        }
-
-        return request.createResponseBuilder(HttpStatus.OK).header("Content-Type","application/json").body("dsdsd").build();
-    }
-
     @FunctionName("/details-opportunities")
     public HttpResponseMessage detailsOpportunities(
             @HttpTrigger(
                     name = "detailsOpportunities",
                     methods = {HttpMethod.GET},
                     authLevel = AuthorizationLevel.ANONYMOUS)
-            HttpRequestMessage<Optional<Integer>> request,
+            HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
-        final String query = request.getQueryParameters().get("country");
-        final Integer id = request.getBody().orElse(Integer.valueOf(query));
+        final String query = request.getQueryParameters().get("id-opportunity");
+        final String id = request.getBody().orElse(query);
         System.out.println("----> " + id);
 
 
@@ -118,7 +94,7 @@ public class Function {
 
         } else {
             DetailsOpportunityService detailsOpportunityService = new DetailsOpportunityService();
-            opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(id);
+            opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(Integer.parseInt(id));
         }
 
         if (opportunityDetailsDTO == null) {

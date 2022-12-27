@@ -33,15 +33,32 @@ public class DetailsOpportunityService {
         System.out.println("data encontrada :: \n "+opportunities);
 
         List<CapexEntity> capexEntities = repositoryFigures.findByCapex(opportunities.getUnique_id(),connectionInfo);
-        opportunitiesdetailDetailsDTO.getOpportunitiesByCountry();
+        System.out.println("data encontrada ca :: \n "+capexEntities);
+
         List<EbitdaEntity> ebitdaEntities = repositoryFigures.findByEbitda(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada eb :: \n "+capexEntities);
+
         List<DividensEntity> dividensEntities = repositoryFigures.findByDividends(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada dui :: \n "+capexEntities);
+
         List<FclEntity> fclEntities = repositoryFigures.findByFCL(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada fc :: \n "+capexEntities);
+
         List<FclShareholderEntity> fclShareholderEntities = repositoryFigures.findByFCLSH(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada fch :: \n "+capexEntities);
+
         List<IncomeEntity> incomeEntities = repositoryFigures.findByIncome(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada inc :: \n "+capexEntities);
+
         List<TirEquityEntity> tirEquityEntities = repositoryFigures.findByTirEquity(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada tir :: \n "+capexEntities);
+
         List<TirProjectEntity> tirProjectEntities = repositoryFigures.findByTirProject(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada pro :: \n "+capexEntities);
+
         List<UtilityEntity> utilityEntities = repositoryFigures.findByUtility(opportunities.getUnique_id(),connectionInfo);
+        System.out.println("data encontrada util :: \n "+capexEntities);
+
 
 //        List<DistributionEntity> distributionEntities = operatingRepository.findByDistribution(opportunities.getUnique_id(),connectionInfo);
 //        List<EnergySolutionEntity> energySolutionEntities = operatingRepository.findByEnergy(opportunities.getUnique_id(),connectionInfo);

@@ -9,7 +9,6 @@ import com.promigas.persistence.repository.SecretRepositoryImpl;
 public class SecretAdapter implements SecretPort {
     @Override
     public ConnectionInfo querySecretConnection(String secretName) {
-        System.out.println("secret Adapter");
         SecretRepository repository = new SecretRepositoryImpl();
         String secretValue = repository.querySecret(secretName);
         return new Gson().fromJson(secretValue, ConnectionInfo.class);

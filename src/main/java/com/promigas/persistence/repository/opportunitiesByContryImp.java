@@ -87,7 +87,8 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
             PreparedStatement oppQuery = connection.prepareStatement(QUERY_OPPORTUNITIES_BY_ID);
             oppQuery.setInt(1, id);
             ResultSet opprs = oppQuery.executeQuery();
-            while(opprs.next()) {
+            System.out.println(" opp  " + opprs);
+            while (opprs.next()) {
                 OpportunitiesEntity opp = new OpportunitiesEntity();
                 SectorEntity sectorEntity = new SectorEntity();
                 TypeContractEntity typeContractEntity = new TypeContractEntity();
@@ -118,13 +119,14 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
                 opp.setPropCapexCop(opprs.getString("prop_capex_cop"));
                 opp.setFinancilAsset(opprs.getString("financial_asset"));
 
-                opportunitiesEntities = opp;
+                 opportunitiesEntities = opp;
             }
-        }catch(Exception ex){
+            System.out.println(" ---><>>> " + opportunitiesEntities);
+            return opportunitiesEntities;
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
-        }finally {
+        } finally {
             closeConnection();
         }
-        return null;
     }
 }
