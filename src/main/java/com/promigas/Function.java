@@ -76,11 +76,34 @@ public class Function {
         }
     }
 
+    @FunctionName("ms1")
+    public HttpResponseMessage ms1(
+            @HttpTrigger(
+                    name = "ms1",
+                    methods = {HttpMethod.GET},
+                    authLevel = AuthorizationLevel.ANONYMOUS)
+            HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        try {
+
+           int numeroCaso = Integer.valueOf(request.getQueryParameters().get("numeroCaso"));
+
+            System.out.println("num caso: "+numeroCaso);
+            if (numeroCaso!=0 ){
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+        return request.createResponseBuilder(HttpStatus.OK).header("Content-Type","application/json").body("dsdsd").build();
+    }
 
     @FunctionName("/details-opportunities")
     public HttpResponseMessage detailsOpportunities(
             @HttpTrigger(
-                    name = "req",
+                    name = "detailsOpportunities",
                     methods = {HttpMethod.GET},
                     authLevel = AuthorizationLevel.ANONYMOUS)
             HttpRequestMessage<Optional<Integer>> request,
@@ -98,10 +121,10 @@ public class Function {
             opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(id);
         }
 
-        if (opportunitiesAllByCountryDto == null) {
+        if (opportunityDetailsDTO == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
         } else {
-            return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesAllByCountryDto).build();
+            return request.createResponseBuilder(HttpStatus.OK).body(opportunityDetailsDTO).build();
         }
     }
 
