@@ -11,10 +11,10 @@ public class EnergySolutionEntity {
 
     private int unique_id;
     private OpportunitiesEntity idoportunity;
-    private String solenergunit;
-    private String solenergfigure;
-    private String solgenerfigure;
-    private String solgenerunit;
-    private String soldegradation;
-    private String solenerghoursun;
+    private String solenerg_power_unit;
+    private String solenerg_power_figure;
+    private String solenerg_gener_figure;
+    private String solenerg_gener_unit;
+    private String solenerg_degradation_average ;
+    private String solenerg_hour_sun ;
 }
