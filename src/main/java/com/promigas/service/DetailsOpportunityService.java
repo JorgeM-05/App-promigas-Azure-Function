@@ -74,8 +74,8 @@ public class DetailsOpportunityService {
     }
 
 
-    public OpportunitiesByCountryDTO mapToAll(List<CapexEntity> capexEntity, List<DividensEntity> dividensEntities,
-                                              List<EbitdaEntity> ebitdaEntity, List<FclEntity> fclEntities,
+    public OpportunitiesByCountryDTO mapToAll(List<CapexEntity> capexEntity,List<EbitdaEntity> ebitdaEntity,
+                                              List<DividensEntity> dividensEntities, List<FclEntity> fclEntities,
                                               List<FclShareholderEntity> fclShareholderEntities,
                                               List<IncomeEntity> incomeEntities,
                                               List<TirEquityEntity> tirEquityEntities, List<TirProjectEntity> tirProjectEntities,
