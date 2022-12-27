@@ -67,7 +67,7 @@ public class DetailsOpportunityService {
 
 
         opportunitiesdetailDetailsDTO.setOpportunitiesByCountry(
-                mapToAll(capexEntities,dividensEntities,ebitdaEntities,fclEntities,fclShareholderEntities,incomeEntities,
+                mapToAll(capexEntities,ebitdaEntities,dividensEntities,fclEntities,fclShareholderEntities,incomeEntities,
                 tirEquityEntities,tirProjectEntities,utilityEntities));
 
         return opportunitiesdetailDetailsDTO;

@@ -20,8 +20,8 @@ public class OperatingRepositoryImp extends AbstractRepositoryDatabase implement
     private static final String QUERY_TRANSPORT = "select * from dbo.cf_capex c where c.id_opportunity=?";
 
 
-        @Override
-        public List<DistributionEntity> findByDistribution(int id_opportunity, ConnectionInfo connectionInfo) {
+    @Override
+    public List<DistributionEntity> findByDistribution(int id_opportunity, ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
         List<DistributionEntity> distributionEntities = new ArrayList<DistributionEntity>();
 
@@ -41,7 +41,7 @@ public class OperatingRepositoryImp extends AbstractRepositoryDatabase implement
             }
             return distributionEntities;
         } catch (Exception ex) {
-           System.out.println(ex.getMessage(),ex);
+//           System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         } finally {
             closeConnection();
@@ -53,34 +53,39 @@ public class OperatingRepositoryImp extends AbstractRepositoryDatabase implement
 
     @Override
     public List<EnergySolutionEntity> findByEnergy(int id_opportunity, ConnectionInfo connectionInfo) {
-    getConnectionSQLServer(connectionInfo);
-    List<EnergySolutionEntity> energySolutionEntities = new ArrayList<EnergySolutionEntity>();
-
-        try {
-        PreparedStatement Query = connection.prepareStatement(QUERY_ENERGY);
-        Query.setInt(1, id_opportunity);
-        ResultSet rs10 = Query.executeQuery();
-        while (rs10.next()) {
-            DistributionEntity ener = new DistributionEntity();
-            ener.setUnique_id(rs10.getInt("unique_id"));
-            ener.setS(rs10.getString("volume_distribution"));
-            ener.setDistriPeriod(rs10.getString("distr_connec_period"));
-            ener.setDistributionKms(rs10.getString("distr_kms_red"));
-            ener.setDistributionUsers(rs10.getString("distr_user_accumulated"));
-            ener.setDistributionPenetration(rs10.getString("distr_penetration"));
-            energySolutionEntities.add(ener);
-        }
-        return distributionEntities;
-    } catch (Exception ex) {
-        System.out.println(ex.getMessage(),ex);
-        throw new RuntimeException(ex);
-    } finally {
-        closeConnection();
+        return null;
     }
 
+//    @Override
+//    public List<EnergySolutionEntity> findByEnergy(int id_opportunity, ConnectionInfo connectionInfo) {
+//    getConnectionSQLServer(connectionInfo);
+//    List<EnergySolutionEntity> energySolutionEntities = new ArrayList<EnergySolutionEntity>();
+//
+//        try {
+//        PreparedStatement Query = connection.prepareStatement(QUERY_ENERGY);
+//        Query.setInt(1, id_opportunity);
+//        ResultSet rs10 = Query.executeQuery();
+//        while (rs10.next()) {
+//            DistributionEntity ener = new DistributionEntity();
+//            ener.setUnique_id(rs10.getInt("unique_id"));
+//            ener.setVolumeDistribution(rs10.getString("volume_distribution"));
+//            ener.setDistriPeriod(rs10.getString("distr_connec_period"));
+//            ener.setDistributionKms(rs10.getString("distr_kms_red"));
+//            ener.setDistributionUsers(rs10.getString("distr_user_accumulated"));
+//            ener.setDistributionPenetration(rs10.getString("distr_penetration"));
+//            energySolutionEntities.add(ener);
+//        }
+//        return distributionEntities;
+//    } catch (Exception ex) {
+//        System.out.println(ex.getMessage(),ex);
+//        throw new RuntimeException(ex);
+//    } finally {
+//        closeConnection();
+//    }
 
 
-}    @Override
+
+    @Override
     public List<TransportEntity> findByTransport(int id_opportunity, ConnectionInfo connectionInfo) {
         return null;
     }

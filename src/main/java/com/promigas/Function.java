@@ -13,9 +13,12 @@ import com.promigas.domain.dto.OpportunitiesDto;
 import com.promigas.domain.dto.detailOpportunitiesDTO.DetailsOpportunitiesByCountryDTO;
 import com.promigas.domain.dto.detailOpportunitiesDTO.OpportunityDetailsDTO;
 import com.promigas.service.DetailsOpportunityService;
+import com.promigas.service.FilterService;
 import com.promigas.service.OpportunitiesByCountryService;
 import com.promigas.service.OpportunitiesService;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -91,10 +94,37 @@ public class Function {
 
         OpportunityDetailsDTO opportunityDetailsDTO = null;
         if (id == null) {
-
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query id is null").build();
         } else {
             DetailsOpportunityService detailsOpportunityService = new DetailsOpportunityService();
             opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(Integer.parseInt(id));
+            return request.createResponseBuilder(HttpStatus.OK).body(opportunityDetailsDTO).build();
+        }
+
+//        if (opportunityDetailsDTO == null) {
+//        } else {
+//        }
+    }
+
+    @FunctionName("/filter")
+    public HttpResponseMessage filter(
+            @HttpTrigger(
+                    name = "filter",
+                    methods = {HttpMethod.GET},
+                    authLevel = AuthorizationLevel.ANONYMOUS)
+            HttpRequestMessage<Optional<List<String>>> request,
+            final ExecutionContext context) {
+        final String query = request.getQueryParameters().get("id-countries");
+        final List<String> id = request.getBody().orElse(Collections.singletonList(query));
+        System.out.println("----> " + id);
+
+
+        OpportunityDetailsDTO opportunityDetailsDTO = null;
+        if (id == null) {
+
+        } else {
+            FilterService filterService = new FilterService();
+            opportunityDetailsDTO = filterService.getDataOpportunities(Integer.parseInt(id));
         }
 
         if (opportunityDetailsDTO == null) {
