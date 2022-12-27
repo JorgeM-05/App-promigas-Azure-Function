@@ -76,43 +76,16 @@ public class Function {
         }
     }
 
-    @FunctionName("/details")
-    public HttpResponseMessage details(
+    @FunctionName("/details-opportunities")
+    public HttpResponseMessage detailsOpportunities(
             @HttpTrigger(
-                    name = "req",
+                    name = "detailsOpportunities",
                     methods = {HttpMethod.GET},
                     authLevel = AuthorizationLevel.ANONYMOUS)
             HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
-        final String query = request.getQueryParameters().get("country");
-        final String country = request.getBody().orElse(query);
-        System.out.println("----> " + country);
-
-
-        OpportunitiesAllByCountryDto opportunitiesAllByCountryDto = null;
-        if (country == null) {
-
-        } else {
-            OpportunitiesByCountryService opportunities = new OpportunitiesByCountryService();
-            opportunitiesAllByCountryDto = opportunities.getDataOpportunities(country);
-        }
-
-        if (opportunitiesAllByCountryDto == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
-        } else {
-            return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesAllByCountryDto).build();
-        }
-    }
-    @FunctionName("/details-opportunities")
-    public HttpResponseMessage detailsOpportunities(
-            @HttpTrigger(
-                    name = "req",
-                    methods = {HttpMethod.GET},
-                    authLevel = AuthorizationLevel.ANONYMOUS)
-            HttpRequestMessage<Optional<Integer>> request,
-            final ExecutionContext context) {
-        final String query = request.getQueryParameters().get("country");
-        final Integer id = request.getBody().orElse(Integer.valueOf(query));
+        final String query = request.getQueryParameters().get("id-opportunity");
+        final String id = request.getBody().orElse(query);
         System.out.println("----> " + id);
 
 
@@ -121,7 +94,7 @@ public class Function {
 
         } else {
             DetailsOpportunityService detailsOpportunityService = new DetailsOpportunityService();
-            opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(id);
+            opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(Integer.parseInt(id));
         }
 
         if (opportunityDetailsDTO == null) {

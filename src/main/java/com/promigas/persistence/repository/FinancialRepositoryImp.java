@@ -10,7 +10,7 @@ import java.util.List;
 
     public class FinancialRepositoryImp extends AbstractRepositoryDatabase implements FinancialRepository{
     private static final String QUERY_CAPEX = "select * from dbo.cf_capex c where c.id_opportunity=?";
-    private static final String QUERY_DIVIDENS = "select * from dbo.cf_dividens c where c.id_opportunity=?";
+    private static final String QUERY_DIVIDENS = "select * from dbo.cf_dividends c where c.id_opportunity=?";
     private static final String QUERY_EBITDA = "select * from dbo.cf_ebitda c where c.id_opportunity=?";
     private static final String QUERY_FCL = "select * from dbo.cf_fcl c where c.id_opportunity=?";
     private static final String QUERY_FCL_SH = "select * from dbo.cf_fcl_shareholder c where c.id_opportunity=?";
@@ -33,7 +33,7 @@ import java.util.List;
                 CapexEntity cx = new CapexEntity();
                 cx.setUnique_id(rs.getInt("unique_id"));
                 cx.setYear(rs.getString("year"));
-                cx.setCapexUsd(rs.getString("cape_usd"));
+                cx.setCapexUsd(rs.getString("capex_usd"));
                 cx.setValueCapexUsd(rs.getString("value_capex_usd"));
                 cx.setCapexCop(rs.getString("capex_cop"));
                 cx.setValueCapexCop(rs.getString("value_capex_cop"));

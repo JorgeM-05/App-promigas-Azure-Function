@@ -8,10 +8,7 @@ public class SecretRepositoryImpl implements SecretRepository{
     public String querySecret(String secretName) {
 
         ConnectionInfo connection = new ConnectionInfo();
-        System.out.println("QuerySecret datos bd");
         if ("connectionSQL".equals(secretName)) {
-            System.out.println("In.... QuerySecret datos bd");
-
             connection.setConnectionPattern("jdbc:sqlserver://{0}:{1};encrypt=true;databaseName={2};user={3};password={4};trustServerCertificate=true");
             connection.setHost("localhost");
             connection.setPort("1433");
