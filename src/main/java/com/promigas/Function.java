@@ -10,9 +10,11 @@ import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 import com.promigas.domain.dto.OpportunitiesAllByCountryDto;
 import com.promigas.domain.dto.OpportunitiesDto;
+import com.promigas.domain.dto.detailOpportunitiesDTO.DetailsOpportunitiesByCountryDTO;
+import com.promigas.domain.dto.detailOpportunitiesDTO.OpportunityDetailsDTO;
+import com.promigas.service.DetailsOpportunityService;
 import com.promigas.service.OpportunitiesByCountryService;
 import com.promigas.service.OpportunitiesService;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -45,8 +47,6 @@ public class Function {
             return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesDto).build();
         }
     }
-
-
 
     @FunctionName("/list-all-opp")
     public HttpResponseMessage listAllOpp(
@@ -90,12 +90,12 @@ public class Function {
         System.out.println("----> " + id);
 
 
-        OpportunitiesAllByCountryDto opportunitiesAllByCountryDto = null;
+        OpportunityDetailsDTO opportunityDetailsDTO = null;
         if (id == null) {
 
         } else {
-            OpportunitiesByCountryService opportunities = new OpportunitiesByCountryService();
-            opportunitiesAllByCountryDto = opportunities.getDataOpportunities(country);
+            DetailsOpportunityService detailsOpportunityService = new DetailsOpportunityService();
+            opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(id);
         }
 
         if (opportunitiesAllByCountryDto == null) {

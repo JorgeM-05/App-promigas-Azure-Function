@@ -4,7 +4,7 @@ import com.promigas.domain.dto.detailOpportunitiesDTO.financial.*;
 import lombok.Data;
 
 @Data
-public class DetailOpportunitiesByCountry {
+public class DetailsOpportunitiesByCountryDTO {
     public String nameOportunity;
     public String country;
     public String lastUpdateDate;
