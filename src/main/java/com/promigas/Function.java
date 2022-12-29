@@ -56,9 +56,9 @@ public class Function {
 
 
     /**
-     * This function listens at endpoint "/api/list-opportunities-country". Two ways to invoke it using "curl" command in bash:
-     * 1. curl -d "HTTP Body" {your host}/api/list-opportunities-country
-     * 2. curl "{your host}/api/list-opportunities-country?country={id}"
+     * This function listens at endpoint "/api/getList-opportunities-country". Two ways to invoke it using "curl" command in bash:
+     * 1. curl -d "HTTP Body" {your host}/api/getList-opportunities-country?country={id}
+     * 2. curl "{your host}/api/getList-opportunities-country?country={id}"
      */
     @FunctionName("/getList-opportunities-country")
     public HttpResponseMessage listOpportunities(
@@ -87,9 +87,9 @@ public class Function {
 
 
     /**
-     * This function listens at endpoint "/api/list-all-opp". Two ways to invoke it using "curl" command in bash:
-     * 1. curl -d "HTTP Body" {your host}/api/list-all-opp
-     * 2. curl "{your host}/api/list-all-opp?id-opportunity={id}"
+     * This function listens at endpoint "/api/details-opportunities?id-opportunity={id}". Two ways to invoke it using "curl" command in bash:
+     * 1. curl -d "HTTP Body" {your host}/api/details-opportunities?id-opportunity={id}
+     * 2. curl "{your host}/api/details-opportunities?id-opportunity={id}"
      */
     @FunctionName("/details-opportunities")
     public HttpResponseMessage detailsOpportunities(
