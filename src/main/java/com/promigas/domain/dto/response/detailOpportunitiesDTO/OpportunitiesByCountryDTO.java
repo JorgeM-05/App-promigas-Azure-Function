@@ -1,4 +1,4 @@
-package com.promigas.domain.dto.detailOpportunitiesDTO;
+package com.promigas.domain.dto.response.detailOpportunitiesDTO;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.promigas.persistence.repository;
 
-import com.promigas.domain.dto.ConnectionInfo;
+import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.persistence.entity.OpportunitiesEntity;
 
 import java.util.List;

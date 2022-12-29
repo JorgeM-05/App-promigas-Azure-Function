@@ -1,4 +1,4 @@
-package com.promigas.domain.dto;
+package com.promigas.domain.dto.response;
 
 import lombok.Data;
 

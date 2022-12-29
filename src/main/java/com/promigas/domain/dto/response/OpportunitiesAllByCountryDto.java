@@ -1,4 +1,4 @@
-package com.promigas.domain.dto;
+package com.promigas.domain.dto.response;
 
 import lombok.Data;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 @Data
 public class OpportunitiesAllByCountryDto {
-    private int idpais;
+    private int id_country;
     private String country;
     private List<ListOportunitiesByCountry> listOportunitiesByCountries;
 }

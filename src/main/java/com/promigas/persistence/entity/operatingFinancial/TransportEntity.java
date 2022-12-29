@@ -11,6 +11,6 @@ public class TransportEntity {
     private String transportCapacityMax;
     private String TransportCapacityHired;
     private String TransportVolumen;
-    private String TransportLength;
+    private String TransportLengthpipeline;
 
 }

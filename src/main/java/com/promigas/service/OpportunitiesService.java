@@ -1,15 +1,14 @@
 package com.promigas.service;
 
-import com.promigas.domain.dto.ConnectionInfo;
-import com.promigas.domain.dto.OpportunitiesAll;
-import com.promigas.domain.dto.OpportunitiesDto;
+import com.promigas.domain.dto.response.ConnectionInfo;
+import com.promigas.domain.dto.response.OpportunitiesAll;
+import com.promigas.domain.dto.response.OpportunitiesDto;
 import com.promigas.domain.enums.ConstantsEnum;
 import com.promigas.persistence.SecretAdapter;
 import com.promigas.persistence.entity.OpportunitiesEntity;
 import com.promigas.persistence.repository.OpportunitiesRepositoryImpl;
 import com.promigas.persistence.repository.SecretPort;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class OpportunitiesService {
         return opportunitiesDto;
     }
 
-    // arreglar este map error
     public List<OpportunitiesAll> mapToOpportunitiesDTO(
             List<OpportunitiesEntity> opportunitiesEntityList)
     {
@@ -49,9 +47,8 @@ public class OpportunitiesService {
                     opportunitiesAll.setNumberOpportunity(NumOpportunities);
                     opportunitiesAll.setCountry(oppor.getIdCountry().getNameContry());
                     opportunitiesAll.setCoordinates(oppor.getCoordinates());
-
+                    opportunitiesAll.setUniqid(oppor.getUnique_id());
                     opportunitiesAlls.add(opportunitiesAll);
-                    id.add(oppor.getIdCountry().getUnique_id());
                 }
             }
         }

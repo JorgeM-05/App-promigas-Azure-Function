@@ -1,6 +1,6 @@
-package com.promigas.domain.dto.detailOpportunitiesDTO;
+package com.promigas.domain.dto.response.detailOpportunitiesDTO;
 
-import com.promigas.domain.dto.detailOpportunitiesDTO.financial.*;
+import com.promigas.domain.dto.response.detailOpportunitiesDTO.financial.*;
 import lombok.Data;
 
 @Data

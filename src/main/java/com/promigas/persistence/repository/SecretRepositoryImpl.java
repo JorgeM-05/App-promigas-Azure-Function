@@ -1,7 +1,7 @@
 package com.promigas.persistence.repository;
 
 import com.google.gson.Gson;
-import com.promigas.domain.dto.ConnectionInfo;
+import com.promigas.domain.dto.response.ConnectionInfo;
 
 public class SecretRepositoryImpl implements SecretRepository{
     @Override

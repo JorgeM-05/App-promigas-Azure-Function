@@ -1,6 +1,6 @@
 package com.promigas.persistence.repository;
 
-import com.promigas.domain.dto.ConnectionInfo;
+import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.persistence.entity.FiguresFinancial.*;
 
 import java.util.List;
@@ -15,6 +15,8 @@ public interface FinancialRepository {
     public List<TirEquityEntity> findByTirEquity(int id_opportunity, ConnectionInfo connectionInfo);
     public List<TirProjectEntity> findByTirProject(int id_opportunity, ConnectionInfo connectionInfo);
     public List<UtilityEntity> findByUtility(int id_opportunity, ConnectionInfo connectionInfo);
+    public List<TarifEntity> findByTarif(int id_opportunity, ConnectionInfo connectionInfo);
+
 
 
 

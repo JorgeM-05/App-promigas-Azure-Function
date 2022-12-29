@@ -1,9 +1,9 @@
-package com.promigas.domain.dto;
+package com.promigas.domain.dto.response;
 
 import lombok.Data;
 
 @Data
-public class ListOportunitiesByCountry {
+public class ListOpportunitiesDto {
     private int id_opportunities;
     private String opportunities;
 }

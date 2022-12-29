@@ -1,9 +1,9 @@
 package com.promigas.service;
 
-import com.promigas.domain.dto.ConnectionInfo;
-import com.promigas.domain.dto.detailOpportunitiesDTO.OpportunitiesByCountryDTO;
-import com.promigas.domain.dto.detailOpportunitiesDTO.OpportunityDetailsDTO;
-import com.promigas.domain.dto.detailOpportunitiesDTO.financial.*;
+import com.promigas.domain.dto.response.ConnectionInfo;
+import com.promigas.domain.dto.response.detailOpportunitiesDTO.OpportunitiesByCountryDTO;
+import com.promigas.domain.dto.response.detailOpportunitiesDTO.OpportunityDetailsDTO;
+import com.promigas.domain.dto.response.detailOpportunitiesDTO.financial.*;
 import com.promigas.domain.enums.ConstantsEnum;
 import com.promigas.persistence.SecretAdapter;
 import com.promigas.persistence.entity.FiguresFinancial.*;
@@ -28,47 +28,28 @@ public class DetailsOpportunityService {
 
         SecretPort secretPort = new SecretAdapter();
         ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
-        System.out.println("buscando por id");
+
         OpportunitiesEntity opportunities = repository.findById(id_opportunity,connectionInfo);
-        System.out.println("data encontrada :: \n "+opportunities);
-
         List<CapexEntity> capexEntities = repositoryFigures.findByCapex(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada ca :: \n "+capexEntities);
-
         List<EbitdaEntity> ebitdaEntities = repositoryFigures.findByEbitda(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada eb :: \n "+capexEntities);
-
         List<DividensEntity> dividensEntities = repositoryFigures.findByDividends(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada dui :: \n "+capexEntities);
-
         List<FclEntity> fclEntities = repositoryFigures.findByFCL(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada fc :: \n "+capexEntities);
-
         List<FclShareholderEntity> fclShareholderEntities = repositoryFigures.findByFCLSH(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada fch :: \n "+capexEntities);
-
         List<IncomeEntity> incomeEntities = repositoryFigures.findByIncome(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada inc :: \n "+capexEntities);
-
         List<TirEquityEntity> tirEquityEntities = repositoryFigures.findByTirEquity(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada tir :: \n "+capexEntities);
-
         List<TirProjectEntity> tirProjectEntities = repositoryFigures.findByTirProject(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada pro :: \n "+capexEntities);
-
         List<UtilityEntity> utilityEntities = repositoryFigures.findByUtility(opportunities.getUnique_id(),connectionInfo);
-        System.out.println("data encontrada util :: \n "+capexEntities);
+        List<TarifEntity> tarifEntities = repositoryFigures.findByTarif(opportunities.getUnique_id(),connectionInfo);
 
-
-//        List<DistributionEntity> distributionEntities = operatingRepository.findByDistribution(opportunities.getUnique_id(),connectionInfo);
-//        List<EnergySolutionEntity> energySolutionEntities = operatingRepository.findByEnergy(opportunities.getUnique_id(),connectionInfo);
-//        List<TransportEntity> transportEntities = operatingRepository.findByTransport(opportunities.getUnique_id(),connectionInfo);
+        List<DistributionEntity> distributionEntities = operatingRepository.findByDistribution(opportunities.getUnique_id(),connectionInfo);
+        List<EnergySolutionEntity> energySolutionEntities = operatingRepository.findByEnergy(opportunities.getUnique_id(),connectionInfo);
+        List<TransportEntity> transportEntities = operatingRepository.findByTransport(opportunities.getUnique_id(),connectionInfo);
 
 
 
         opportunitiesdetailDetailsDTO.setOpportunitiesByCountry(
-                mapToAll(capexEntities,dividensEntities,ebitdaEntities,fclEntities,fclShareholderEntities,incomeEntities,
-                tirEquityEntities,tirProjectEntities,utilityEntities));
+                mapToAll(capexEntities,ebitdaEntities,dividensEntities,fclEntities,fclShareholderEntities,incomeEntities,
+                tirEquityEntities,tirProjectEntities,utilityEntities,tarifEntities));
 
         return opportunitiesdetailDetailsDTO;
     }
@@ -76,10 +57,9 @@ public class DetailsOpportunityService {
 
     public OpportunitiesByCountryDTO mapToAll(List<CapexEntity> capexEntity,List<EbitdaEntity> ebitdaEntity,
                                               List<DividensEntity> dividensEntities, List<FclEntity> fclEntities,
-                                              List<FclShareholderEntity> fclShareholderEntities,
-                                              List<IncomeEntity> incomeEntities,
+                                              List<FclShareholderEntity> fclShareholderEntities, List<IncomeEntity> incomeEntities,
                                               List<TirEquityEntity> tirEquityEntities, List<TirProjectEntity> tirProjectEntities,
-                                              List<UtilityEntity> utilityEntities){
+                                              List<UtilityEntity> utilityEntities, List<TarifEntity> tarifEntities){
 
         OpportunitiesByCountryDTO opportunities = new OpportunitiesByCountryDTO();
         List<String> usd = new ArrayList<>();
@@ -95,15 +75,12 @@ public class DetailsOpportunityService {
         IncomeDTO incomeDTO = new IncomeDTO();
         TarifDTO tarifDTO = new TarifDTO();
         TirEquityDTO tirEquityDTO = new TirEquityDTO();
+        TirProjectDTO tirProjectDTO = new TirProjectDTO();
+        UtilityDTO utilityDTO = new UtilityDTO();
+
 
 
         for(CapexEntity capex: capexEntity){
-//            if(var == true) {
-//                capexDTO.setYear(capex.getYear());
-//                capexDTO.setCapexUsd(capex.getCapexUsd());
-//                capexDTO.setCapexCop(capex.getCapexCop());
-//                var = false;
-//            }
             usd.add(capex.getValueCapexUsd());
             cop.add(capex.getValueCapexCop());
             capexDTO.setValueCapexUsd(usd);
