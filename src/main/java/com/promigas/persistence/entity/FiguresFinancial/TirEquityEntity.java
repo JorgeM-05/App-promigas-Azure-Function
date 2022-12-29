@@ -11,7 +11,7 @@ public class TirEquityEntity {
     private int unique_id;
     private OpportunitiesEntity idOpportunity;
     private Date year;
-    private String tirEqFig;
+    private float tirEqFig;
     private String tirEqUnit;
     private String tirEqCapital;
     private String tirEqCost;

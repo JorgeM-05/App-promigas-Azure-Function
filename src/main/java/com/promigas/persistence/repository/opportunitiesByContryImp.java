@@ -15,12 +15,12 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
 
     private static final String QUERY_OPPORTUNITIES = "select * from dbo.opportunities op \n" +
             "INNER Join dbo.country c On op.id_country=c.unique_id\n" +
-            "INNER JOIN dbo.type_contract t On t.unique_id = op.type_contract\n" +
+            "INNER JOIN dbo.type_contract t On t.unique_id = op.id_type_contract\n" +
             "\tINNER JOIN dbo.sector s\tOn s.unique_id = op.id_sector\n" +
-            "where c.name_contry = ?";
+            "where c.name_country = ?";
     private static final String QUERY_OPPORTUNITIES_BY_ID = "select * from dbo.opportunities op \n" +
             "INNER Join dbo.country c On op.id_country=c.unique_id\n" +
-            "INNER JOIN dbo.type_contract t On t.unique_id = op.type_contract\n" +
+            "INNER JOIN dbo.type_contract t On t.unique_id = op.id_type_contract\n" +
             "\tINNER JOIN dbo.sector s\tOn s.unique_id = op.id_sector\n" +
             "where op.unique_id = ?";
     
@@ -40,30 +40,34 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
                 TypeContractEntity typeContractEntity = new TypeContractEntity();
                 CountryEntity countryEntity = new CountryEntity();
 
-                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(20)));
-                countryEntity.setNameContry(opprs.getString("name_contry"));
+                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(19)));
+                countryEntity.setNameContry(opprs.getString("name_country"));
+                countryEntity.setUrlFlags(opprs.getString("url_flags"));
+
                 sectorEntity.setTypeSector(opprs.getString("type_contract"));
-                typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
+                sectorEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
+                typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(22)));
                 typeContractEntity.setTypeContract(opprs.getString("type_sector"));
+
 
                 opp.setIdCountry(countryEntity);
                 opp.setIdSector(sectorEntity);
                 opp.setIdContract(typeContractEntity);
 
                 opp.setUnique_id(Integer.parseInt(opprs.getString("unique_id")));
-                opp.setGreenfield(opprs.getString("greenfield"));
-                opp.setMYA(opprs.getString("mYa"));
+                opp.setGreenfield(Boolean.parseBoolean(opprs.getString("greenfield")));
+                opp.setMYA(Boolean.parseBoolean(opprs.getString("mYa")));
                 opp.setProjecTitle(opprs.getString("project_title"));
                 opp.setDate(opprs.getString("date_update"));
                 opp.setCoordinates(opprs.getString("coordinates"));
                 opp.setDescrip(opprs.getString("opportunity_descrip"));
-                opp.setHorizonope(opprs.getString("horizon_operation"));
+                opp.setHorizonope(Integer.parseInt(opprs.getString("horizon_operation")));
                 opp.setPoc(opprs.getString("POC"));
-                opp.setTrmBase(opprs.getString("TRM_base_capex"));
-                opp.setTrmFin(opprs.getString("TRM_fin_capex"));
-                opp.setPropCapexUsd(opprs.getString("prop_capex_usd"));
-                opp.setPropCapexCop(opprs.getString("prop_capex_cop"));
-                opp.setFinancilAsset(opprs.getString("financial_asset"));
+                opp.setTrmBase(Float.parseFloat(opprs.getString("TRM_base_capex")));
+                opp.setTrmFin(Float.parseFloat(opprs.getString("TRM_fin_capex")));
+                opp.setPropCapexUsd(Float.parseFloat(opprs.getString("prop_capex_usd")));
+                opp.setPropCapexCop(Float.parseFloat(opprs.getString("prop_capex_cop")));
+                opp.setFinancilAsset(Integer.parseInt(opprs.getString("financial_asset")));
 
                 opportunitiesEntities.add(opp);
             }
@@ -81,6 +85,7 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
     @Override
     public OpportunitiesEntity findById(Integer id, ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
+
         OpportunitiesEntity opportunitiesEntities = new OpportunitiesEntity();
 
         try {
@@ -93,35 +98,38 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
                 SectorEntity sectorEntity = new SectorEntity();
                 TypeContractEntity typeContractEntity = new TypeContractEntity();
                 CountryEntity countryEntity = new CountryEntity();
-
-                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(20)));
-                countryEntity.setNameContry(opprs.getString("name_contry"));
+                System.out.println("1.2");
+                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(19)));
+                System.out.println("1.3");
+                countryEntity.setNameContry(opprs.getString("name_country"));
+                System.out.println("1.4");
                 sectorEntity.setTypeSector(opprs.getString("type_contract"));
+
                 typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
                 typeContractEntity.setTypeContract(opprs.getString("type_sector"));
+                System.out.println("1.4");
 
                 opp.setIdCountry(countryEntity);
                 opp.setIdSector(sectorEntity);
                 opp.setIdContract(typeContractEntity);
 
                 opp.setUnique_id(Integer.parseInt(opprs.getString("unique_id")));
-                opp.setGreenfield(opprs.getString("greenfield"));
-                opp.setMYA(opprs.getString("mYa"));
+                opp.setGreenfield(Boolean.parseBoolean(opprs.getString("greenfield")));
+                opp.setMYA(Boolean.parseBoolean(opprs.getString("mYa")));
                 opp.setProjecTitle(opprs.getString("project_title"));
                 opp.setDate(opprs.getString("date_update"));
                 opp.setCoordinates(opprs.getString("coordinates"));
                 opp.setDescrip(opprs.getString("opportunity_descrip"));
-                opp.setHorizonope(opprs.getString("horizon_operation"));
+                opp.setHorizonope(Integer.parseInt(opprs.getString("horizon_operation")));
                 opp.setPoc(opprs.getString("POC"));
-                opp.setTrmBase(opprs.getString("TRM_base_capex"));
-                opp.setTrmFin(opprs.getString("TRM_fin_capex"));
-                opp.setPropCapexUsd(opprs.getString("prop_capex_usd"));
-                opp.setPropCapexCop(opprs.getString("prop_capex_cop"));
-                opp.setFinancilAsset(opprs.getString("financial_asset"));
+                opp.setTrmBase(Float.parseFloat(opprs.getString("TRM_base_capex")));
+                opp.setTrmFin(Float.parseFloat(opprs.getString("TRM_fin_capex")));
+                opp.setPropCapexUsd(Float.parseFloat(opprs.getString("prop_capex_usd")));
+                opp.setPropCapexCop(Float.parseFloat(opprs.getString("prop_capex_cop")));
+                opp.setFinancilAsset(Integer.parseInt(opprs.getString("financial_asset")));
 
                  opportunitiesEntities = opp;
             }
-            System.out.println(" ---><>>> " + opportunitiesEntities);
             return opportunitiesEntities;
         } catch (Exception ex) {
             throw new RuntimeException(ex);

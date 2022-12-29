@@ -9,4 +9,5 @@ import javax.validation.constraints.NotNull;
 public class CountryEntity {
     private int unique_id;
     private String nameContry;
+    private String urlFlags;
 }

@@ -66,7 +66,7 @@ public class OpportunitiesService {
     public int countGreen(List<OpportunitiesEntity> oppor){
         int count=0;
         for(OpportunitiesEntity op: oppor) {
-            if(op.getGreenfield()!= null) {
+            if(op.isGreenfield()) {
                 count++;
             }
         }
@@ -76,7 +76,7 @@ public class OpportunitiesService {
     public int countMYA(List<OpportunitiesEntity> oppor){
         int count=0;
         for(OpportunitiesEntity op: oppor) {
-            if(op.getMYA()!= null) {
+            if(op.isMYA()) {
                 count++;
             }
         }

@@ -16,13 +16,14 @@ public class OpportunitiesRepositoryImpl extends AbstractRepositoryDatabase{
     private static final String QUERY_OPPORTUNITIES = "select * from dbo.opportunities op INNER JOIN dbo.country c \n" +
                                                     "\t\t On c.unique_id = op.id_country \n" +
                                                     "\t INNER JOIN dbo.type_contract t \n" +
-                                                    "\t\t On t.unique_id = op.type_contract \n" +
+                                                    "\t\t On t.unique_id = op.id_type_contract \n" +
                                                     "\t INNER JOIN dbo.sector s \n" +
                                                     "\t\t On s.unique_id = op.id_sector;";
 
     public List<OpportunitiesEntity> findOpportunities(ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
         List<OpportunitiesEntity> opportunitiesEntity = new ArrayList<OpportunitiesEntity>();
+        System.out.println("1.1");
 
         try{
             PreparedStatement oppQuery = connection.prepareStatement(QUERY_OPPORTUNITIES);
@@ -34,10 +35,13 @@ public class OpportunitiesRepositoryImpl extends AbstractRepositoryDatabase{
                 TypeContractEntity typeContractEntity = new TypeContractEntity();
                 CountryEntity countryEntity = new CountryEntity();
 
-                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(20)));
-                countryEntity.setNameContry(opprs.getString("name_contry"));
+                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(19)));
+                countryEntity.setNameContry(opprs.getString("name_country"));
+                countryEntity.setUrlFlags(opprs.getString("url_flags"));
                 sectorEntity.setTypeSector(opprs.getString("type_contract"));
-                typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
+                sectorEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
+
+                typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(22)));
                 typeContractEntity.setTypeContract(opprs.getString("type_sector"));
 
                 opp.setIdCountry(countryEntity);
@@ -45,25 +49,23 @@ public class OpportunitiesRepositoryImpl extends AbstractRepositoryDatabase{
                 opp.setIdContract(typeContractEntity);
 
                 opp.setUnique_id(Integer.parseInt(opprs.getString("unique_id")));
-                opp.setGreenfield(opprs.getString("greenfield"));
-                opp.setMYA(opprs.getString("mYa"));
+                opp.setGreenfield(Boolean.parseBoolean(opprs.getString("greenfield")));
+                opp.setMYA(Boolean.parseBoolean(opprs.getString("mYa")));
                 opp.setProjecTitle(opprs.getString("project_title"));
                 opp.setDate(opprs.getString("date_update"));
                 opp.setCoordinates(opprs.getString("coordinates"));
                 opp.setDescrip(opprs.getString("opportunity_descrip"));
-                opp.setHorizonope(opprs.getString("horizon_operation"));
+                opp.setHorizonope(Integer.parseInt(opprs.getString("horizon_operation")));
                 opp.setPoc(opprs.getString("POC"));
-                opp.setTrmBase(opprs.getString("TRM_base_capex"));
-                opp.setTrmFin(opprs.getString("TRM_fin_capex"));
-                opp.setPropCapexUsd(opprs.getString("prop_capex_usd"));
-                opp.setPropCapexCop(opprs.getString("prop_capex_cop"));
-                opp.setFinancilAsset(opprs.getString("financial_asset"));
-
+                opp.setTrmBase(Float.parseFloat(opprs.getString("TRM_base_capex")));
+                opp.setTrmFin(Float.parseFloat(opprs.getString("TRM_fin_capex")));
+                opp.setPropCapexUsd(Float.parseFloat(opprs.getString("prop_capex_usd")));
+                opp.setPropCapexCop(Float.parseFloat(opprs.getString("prop_capex_cop")));
+                opp.setFinancilAsset(Integer.parseInt(opprs.getString("financial_asset")));
                 opportunitiesEntity.add(opp);
             }
             return opportunitiesEntity;
         }catch(Exception ex){
-//            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         }finally {
             closeConnection();
