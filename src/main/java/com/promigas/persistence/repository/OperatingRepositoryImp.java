@@ -29,9 +29,9 @@ public class OperatingRepositoryImp extends AbstractRepositoryDatabase implement
                 DistributionEntity dis = new DistributionEntity();
                 dis.setUnique_id(rs.getInt("unique_id"));
                 dis.setVolumeDistribution(rs.getString("volume_distribution"));
-                dis.setDistriPeriod(rs.getString("distr_connec_period"));
+                dis.setDistriPeriod(Integer.parseInt(rs.getString("distr_connec_period")));
                 dis.setDistributionKms(rs.getString("distr_kms_red"));
-                dis.setDistributionUsers(rs.getString("distr_user_accumulated"));
+                dis.setDistributionUsers(Integer.parseInt(rs.getString("distr_user_accumulated")));
                 dis.setDistributionPenetration(rs.getString("distr_penetration"));
                 distributionEntities.add(dis);
             }
@@ -56,11 +56,11 @@ public class OperatingRepositoryImp extends AbstractRepositoryDatabase implement
                 EnergySolutionEntity ener = new EnergySolutionEntity();
                 ener.setUnique_id(rs.getInt("unique_id"));
                 ener.setSolEnergyPowerUnit(rs.getString("solenerg_power_unit"));
-                ener.setSolEnergyPowerFigure(rs.getString("solenerg_power_figure"));
+                ener.setSolEnergyPowerFigure(Float.parseFloat(rs.getString("solenerg_power_figure")));
                 ener.setSolGenerUnit(rs.getString("solenerg_gener_figure"));
-                ener.setSolGenerFigure(rs.getString("solenerg_gener_unit"));
-                ener.setSolDegradation(rs.getString("solenerg_degradation_average"));
-                ener.setSolEnergyHourSun(rs.getString("solenerg_hour_sun"));
+                ener.setSolGenerFigure(Float.parseFloat(rs.getString("solenerg_gener_unit")));
+                ener.setSolDegradation(Float.parseFloat(rs.getString("solenerg_degradation_average")));
+                ener.setSolEnergyHourSun(Float.parseFloat(rs.getString("solenerg_hour_sun")));
 
                 energySolutionEntities.add(ener);
             }

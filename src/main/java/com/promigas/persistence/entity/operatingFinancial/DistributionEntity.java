@@ -14,9 +14,9 @@ public class DistributionEntity {
     private int unique_id;
     private OpportunitiesEntity idOportunity;
     private String volumeDistribution;
-    private String distriPeriod;
+    private int distriPeriod;
     private String distributionKms;
-    private String distributionUsers;
+    private int distributionUsers;
     private String distributionPenetration;
 
 }

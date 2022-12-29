@@ -10,9 +10,9 @@ public class EnergySolutionEntity {
     private int unique_id;
     private OpportunitiesEntity idOpportunity;
     private String solEnergyPowerUnit;
-    private String solEnergyPowerFigure;
+    private float solEnergyPowerFigure;
     private String solGenerUnit;
-    private String solGenerFigure;
-    private String solDegradation;
-    private String solEnergyHourSun;
+    private float solGenerFigure;
+    private float solDegradation;
+    private float solEnergyHourSun;
 }

@@ -30,6 +30,7 @@ public class DetailsOpportunityService {
         ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
 
         OpportunitiesEntity opportunities = repository.findById(id_opportunity,connectionInfo);
+        System.out.println("-----");
         List<CapexEntity> capexEntities = repositoryFigures.findByCapex(opportunities.getUnique_id(),connectionInfo);
         List<EbitdaEntity> ebitdaEntities = repositoryFigures.findByEbitda(opportunities.getUnique_id(),connectionInfo);
         List<DividensEntity> dividensEntities = repositoryFigures.findByDividends(opportunities.getUnique_id(),connectionInfo);
@@ -79,12 +80,12 @@ public class DetailsOpportunityService {
         UtilityDTO utilityDTO = new UtilityDTO();
 
 
-
         for(CapexEntity capex: capexEntity){
             usd.add(capex.getValueCapexUsd());
             cop.add(capex.getValueCapexCop());
             capexDTO.setValueCapexUsd(usd);
             capexDTO.setValueCapexCop(cop);
+
         }
         opportunities.setCapexDTO(capexDTO);
 

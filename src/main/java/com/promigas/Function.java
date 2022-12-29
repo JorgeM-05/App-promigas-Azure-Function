@@ -45,6 +45,7 @@ public class Function {
         context.getLogger().info("Java HTTP trigger processed a request.");
 
         OpportunitiesService opportunitiesService = new OpportunitiesService();
+
         OpportunitiesDto opportunitiesDto = opportunitiesService.getDataAllOpportunities();
         if (opportunitiesDto == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
@@ -109,12 +110,8 @@ public class Function {
         } else {
             DetailsOpportunityService detailsOpportunityService = new DetailsOpportunityService();
             opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(Integer.parseInt(id));
-            if(opportunityDetailsDTO == null){
-                return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query id is null").build();
+            return request.createResponseBuilder(HttpStatus.OK).body(opportunityDetailsDTO).build();
 
-            }else {
-                return request.createResponseBuilder(HttpStatus.OK).body(opportunityDetailsDTO).build();
-            }
         }
     }
 

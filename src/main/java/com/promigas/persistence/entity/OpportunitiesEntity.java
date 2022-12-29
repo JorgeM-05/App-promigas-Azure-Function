@@ -2,25 +2,27 @@ package com.promigas.persistence.entity;
 
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 public class OpportunitiesEntity {
     private int unique_id;
     private CountryEntity idCountry;
     private SectorEntity idSector;
     private TypeContractEntity idContract;
-    private String greenfield;
-    private String MYA;
+    private boolean greenfield;
+    private boolean MYA;
     private String projecTitle;
-    private String date;
+    private String date; //cambiar Date
     private String coordinates;
     private String descrip;
     private String section;
-    private String horizonope;
-    private String horizonpre;
-    private String poc;
-    private String trmBase;
-    private String trmFin;
-    private String propCapexUsd;
-    private String propCapexCop;
-    private String financilAsset;
+    private int horizonope;
+    private int horizonpre;
+    private String poc; //cambiar Date
+    private float trmBase;
+    private float trmFin;
+    private float propCapexUsd;
+    private float propCapexCop;
+    private int financilAsset;
 }

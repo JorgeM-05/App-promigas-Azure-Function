@@ -201,7 +201,7 @@ public class FinancialRepositoryImp extends AbstractRepositoryDatabase implement
                 TirEquityEntity tireq = new TirEquityEntity();
                 tireq.setUnique_id(rs.getInt("unique_id"));
                 tireq.setYear(rs.getDate("year"));
-                tireq.setTirEqFig(rs.getString("tir_equity_figure"));
+                tireq.setTirEqFig(Float.parseFloat(rs.getString("tir_equity_figure")));
                 tireq.setTirEqUnit(rs.getString("tir_equity_unit"));
                 tireq.setTirEqCapital(rs.getString("tir_equity_capital_structure"));
                 tireq.setTirEqCost(rs.getString("tir_equity_debt_cost"));
