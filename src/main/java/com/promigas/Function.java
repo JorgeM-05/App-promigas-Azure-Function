@@ -56,12 +56,12 @@ public class Function {
 
 
     /**
-     * This function listens at endpoint "/api/list-all-opp". Two ways to invoke it using "curl" command in bash:
-     * 1. curl -d "HTTP Body" {your host}/api/list-all-opp
-     * 2. curl "{your host}/api/list-all-opp?country={id}"
+     * This function listens at endpoint "/api/list-opportunities-country". Two ways to invoke it using "curl" command in bash:
+     * 1. curl -d "HTTP Body" {your host}/api/list-opportunities-country
+     * 2. curl "{your host}/api/list-opportunities-country?country={id}"
      */
-    @FunctionName("/list-all-opp")
-    public HttpResponseMessage listAllOpp(
+    @FunctionName("/getList-opportunities-country")
+    public HttpResponseMessage listOpportunities(
             @HttpTrigger(
                     name = "req",
                     methods = {HttpMethod.GET},
@@ -70,21 +70,18 @@ public class Function {
                 final ExecutionContext context) {
         final String query = request.getQueryParameters().get("country");
         final String country = request.getBody().orElse(query);
-        System.out.println("----> " + country);
-
 
         OpportunitiesAllByCountryDto opportunitiesAllByCountryDto = null;
         if (country == null) {
-
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Error: verify query params ... country :: "+country).build();
         } else {
             OpportunitiesByCountryService opportunities = new OpportunitiesByCountryService();
             opportunitiesAllByCountryDto = opportunities.getDataOpportunities(country);
-        }
-
-        if (opportunitiesAllByCountryDto == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
-        } else {
-            return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesAllByCountryDto).build();
+            if (opportunitiesAllByCountryDto == null) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
+            } else {
+                return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesAllByCountryDto).build();
+            }
         }
     }
 
@@ -92,7 +89,7 @@ public class Function {
     /**
      * This function listens at endpoint "/api/list-all-opp". Two ways to invoke it using "curl" command in bash:
      * 1. curl -d "HTTP Body" {your host}/api/list-all-opp
-     * 2. curl "{your host}/api/list-all-opp?country={id}"
+     * 2. curl "{your host}/api/list-all-opp?id-opportunity={id}"
      */
     @FunctionName("/details-opportunities")
     public HttpResponseMessage detailsOpportunities(
@@ -121,6 +118,11 @@ public class Function {
         }
     }
 
+    /**
+     * This function listens at endpoint "/api/filter". Two ways to invoke it using "curl" command in bash:
+     * 1. curl -d "HTTP Body" {your host}/api/filter
+     * 2. curl "{your host}/api/filter"
+     */
     @FunctionName("/filter")
     public HttpResponseMessage filter(
             @HttpTrigger(

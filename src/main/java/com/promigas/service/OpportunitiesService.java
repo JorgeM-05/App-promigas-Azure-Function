@@ -32,7 +32,6 @@ public class OpportunitiesService {
         return opportunitiesDto;
     }
 
-    // arreglar este map error
     public List<OpportunitiesAll> mapToOpportunitiesDTO(
             List<OpportunitiesEntity> opportunitiesEntityList)
     {
@@ -48,9 +47,8 @@ public class OpportunitiesService {
                     opportunitiesAll.setNumberOpportunity(NumOpportunities);
                     opportunitiesAll.setCountry(oppor.getIdCountry().getNameContry());
                     opportunitiesAll.setCoordinates(oppor.getCoordinates());
-
+                    opportunitiesAll.setUniqid(oppor.getUnique_id());
                     opportunitiesAlls.add(opportunitiesAll);
-                    id.add(oppor.getIdCountry().getUnique_id());
                 }
             }
         }

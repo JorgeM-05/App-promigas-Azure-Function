@@ -11,9 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OperatingRepositoryImp extends AbstractRepositoryDatabase implements OperatingRepository {
-    private static final String QUERY_DISTRIBUTION = "select * from dbo.cf_capex c where c.id_opportunity=?";
-    private static final String QUERY_ENERGY = "select * from dbo.cf_capex c where c.id_opportunity=?";
-    private static final String QUERY_TRANSPORT = "select * from dbo.cf_capex c where c.id_opportunity=?";
+    private static final String QUERY_DISTRIBUTION = "select * from dbo.co_distribution c where c.id_opportunity=?";
+    private static final String QUERY_ENERGY = "select * from dbo.co_energy_solutions c where c.id_opportunity=?";
+    private static final String QUERY_TRANSPORT = "select * from dbo.co_transport c where c.id_opportunity=?";
 
 
     @Override
@@ -24,65 +24,78 @@ public class OperatingRepositoryImp extends AbstractRepositoryDatabase implement
         try {
             PreparedStatement Query = connection.prepareStatement(QUERY_DISTRIBUTION);
             Query.setInt(1, id_opportunity);
-            ResultSet rs9 = Query.executeQuery();
-            while (rs9.next()) {
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
                 DistributionEntity dis = new DistributionEntity();
-                dis.setUnique_id(rs9.getInt("unique_id"));
-                dis.setVolumeDistribution(rs9.getString("volume_distribution"));
-                dis.setDistriPeriod(rs9.getString("distr_connec_period"));
-                dis.setDistributionKms(rs9.getString("distr_kms_red"));
-                dis.setDistributionUsers(rs9.getString("distr_user_accumulated"));
-                dis.setDistributionPenetration(rs9.getString("distr_penetration"));
+                dis.setUnique_id(rs.getInt("unique_id"));
+                dis.setVolumeDistribution(rs.getString("volume_distribution"));
+                dis.setDistriPeriod(rs.getString("distr_connec_period"));
+                dis.setDistributionKms(rs.getString("distr_kms_red"));
+                dis.setDistributionUsers(rs.getString("distr_user_accumulated"));
+                dis.setDistributionPenetration(rs.getString("distr_penetration"));
                 distributionEntities.add(dis);
             }
             return distributionEntities;
         } catch (Exception ex) {
-//           System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         } finally {
             closeConnection();
         }
-
-
-
     }
 
     @Override
     public List<EnergySolutionEntity> findByEnergy(int id_opportunity, ConnectionInfo connectionInfo) {
-        return null;
+        getConnectionSQLServer(connectionInfo);
+        List<EnergySolutionEntity> energySolutionEntities = new ArrayList<EnergySolutionEntity>();
+
+        try {
+            PreparedStatement Query = connection.prepareStatement(QUERY_ENERGY);
+            Query.setInt(1, id_opportunity);
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
+                EnergySolutionEntity ener = new EnergySolutionEntity();
+                ener.setUnique_id(rs.getInt("unique_id"));
+                ener.setSolEnergyPowerUnit(rs.getString("solenerg_power_unit"));
+                ener.setSolEnergyPowerFigure(rs.getString("solenerg_power_figure"));
+                ener.setSolGenerUnit(rs.getString("solenerg_gener_figure"));
+                ener.setSolGenerFigure(rs.getString("solenerg_gener_unit"));
+                ener.setSolDegradation(rs.getString("solenerg_degradation_average"));
+                ener.setSolEnergyHourSun(rs.getString("solenerg_hour_sun"));
+
+                energySolutionEntities.add(ener);
+            }
+            return energySolutionEntities;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            closeConnection();
+        }
     }
-
-//    @Override
-//    public List<EnergySolutionEntity> findByEnergy(int id_opportunity, ConnectionInfo connectionInfo) {
-//    getConnectionSQLServer(connectionInfo);
-//    List<EnergySolutionEntity> energySolutionEntities = new ArrayList<EnergySolutionEntity>();
-//
-//        try {
-//        PreparedStatement Query = connection.prepareStatement(QUERY_ENERGY);
-//        Query.setInt(1, id_opportunity);
-//        ResultSet rs10 = Query.executeQuery();
-//        while (rs10.next()) {
-//            DistributionEntity ener = new DistributionEntity();
-//            ener.setUnique_id(rs10.getInt("unique_id"));
-//            ener.setVolumeDistribution(rs10.getString("volume_distribution"));
-//            ener.setDistriPeriod(rs10.getString("distr_connec_period"));
-//            ener.setDistributionKms(rs10.getString("distr_kms_red"));
-//            ener.setDistributionUsers(rs10.getString("distr_user_accumulated"));
-//            ener.setDistributionPenetration(rs10.getString("distr_penetration"));
-//            energySolutionEntities.add(ener);
-//        }
-//        return distributionEntities;
-//    } catch (Exception ex) {
-//        System.out.println(ex.getMessage(),ex);
-//        throw new RuntimeException(ex);
-//    } finally {
-//        closeConnection();
-//    }
-
 
 
     @Override
     public List<TransportEntity> findByTransport(int id_opportunity, ConnectionInfo connectionInfo) {
-        return null;
+        getConnectionSQLServer(connectionInfo);
+        List<TransportEntity> transportEntities = new ArrayList<TransportEntity>();
+
+        try {
+            PreparedStatement Query = connection.prepareStatement(QUERY_TRANSPORT);
+            Query.setInt(1, id_opportunity);
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
+                TransportEntity transport = new TransportEntity();
+                transport.setUnique_id(rs.getInt("unique_id"));
+                transport.setTransportCapacityMax(rs.getString("transp_capacity_max"));
+                transport.setTransportCapacityHired(rs.getString("trans_capacity_hired"));
+                transport.setTransportVolumen(rs.getString("trans_vol_trans"));
+                transport.setTransportLengthpipeline(rs.getString("trans_length_pipeline"));
+                transportEntities.add(transport);
+            }
+            return transportEntities;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            closeConnection();
+        }
     }
 }

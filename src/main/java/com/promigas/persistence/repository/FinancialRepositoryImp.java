@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-    public class FinancialRepositoryImp extends AbstractRepositoryDatabase implements FinancialRepository{
+public class FinancialRepositoryImp extends AbstractRepositoryDatabase implements FinancialRepository{
     private static final String QUERY_CAPEX = "select * from dbo.cf_capex c where c.id_opportunity=?";
     private static final String QUERY_DIVIDENS = "select * from dbo.cf_dividends c where c.id_opportunity=?";
     private static final String QUERY_EBITDA = "select * from dbo.cf_ebitda c where c.id_opportunity=?";
@@ -18,13 +18,14 @@ import java.util.List;
     private static final String QUERY_TIR_EQUITY = "select * from dbo.cf_tir_equity c where c.id_opportunity=?";
     private static final String QUERY_TIR_PROJECT = "select * from dbo.cf_tir_project c where c.id_opportunity=?";
     private static final String QUERY_UTILITY = "select * from dbo.cf_utility_net c where c.id_opportunity=?";
+    private static final String QUERY_TARIF = "select * from dbo.cf_tarif c where c.id_opportunity=?";
+
 
 
     @Override
     public List<CapexEntity> findByCapex(int id_opportunity, ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
         List<CapexEntity> capexEntities = new ArrayList<CapexEntity>();
-
         try{
             PreparedStatement Query = connection.prepareStatement(QUERY_CAPEX);
             Query.setInt(1,id_opportunity);
@@ -39,10 +40,8 @@ import java.util.List;
                 cx.setValueCapexCop(rs.getString("value_capex_cop"));
                 capexEntities.add(cx);
             }
-            System.out.println("Capex::: "+capexEntities);
             return capexEntities;
         }catch(Exception ex){
-//            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         }finally {
             closeConnection();
@@ -56,19 +55,17 @@ import java.util.List;
         try{
             PreparedStatement Query = connection.prepareStatement(QUERY_EBITDA);
             Query.setInt(1,id_opportunity);
-            ResultSet rs2 = Query.executeQuery();
-            while(rs2.next()) {
+            ResultSet rs = Query.executeQuery();
+            while(rs.next()) {
                 EbitdaEntity eb = new EbitdaEntity();
-                eb.setUnique_id(rs2.getInt("unique_id"));
-                eb.setYear(rs2.getString("year"));
-                eb.setEbitdaUsd(rs2.getString("ebitda_usd"));
-                eb.setValueEbitdaUsd(rs2.getString("value_ebitda_usd"));
-                eb.setEbitdaCop(rs2.getString("ebitda_cop"));
-                eb.setValueEbitdaCop(rs2.getString("value_ebitda_cop"));
+                eb.setUnique_id(rs.getInt("unique_id"));
+                eb.setYear(rs.getString("year"));
+                eb.setEbitdaUsd(rs.getString("ebitda_usd"));
+                eb.setValueEbitdaUsd(rs.getString("value_ebitda_usd"));
+                eb.setEbitdaCop(rs.getString("ebitda_cop"));
+                eb.setValueEbitdaCop(rs.getString("value_ebitda_cop"));
                 ebitdaEntities.add(eb);
             }
-            System.out.println("Ebitda::: "+ebitdaEntities);
-
             return ebitdaEntities;
         }catch(Exception ex){
 //            System.out.println(ex.getMessage(),ex);
@@ -79,31 +76,26 @@ import java.util.List;
     }
 
 
-
     @Override
     public List<DividensEntity> findByDividends(int id_opportunity, ConnectionInfo connectionInfo) {
     getConnectionSQLServer(connectionInfo);
     List<DividensEntity> dividensEntities = new ArrayList<DividensEntity>();
-
         try {
             PreparedStatement Query = connection.prepareStatement(QUERY_DIVIDENS);
             Query.setInt(1, id_opportunity);
-            ResultSet rs3 = Query.executeQuery();
-            while (rs3.next()) {
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
                 DividensEntity dv = new DividensEntity();
-                dv.setUnique_id(rs3.getInt("unique_id"));
-                dv.setYear(rs3.getString("year"));
-                dv.setDividensUsd(rs3.getString("dividens_usd"));
-                dv.setValuedividensUsd(rs3.getString("value_dividends_usd"));
-                dv.setDividensCop(rs3.getString("dividens_cop"));
-                dv.setValueDividensCop(rs3.getString("value_dividends_cop"));
+                dv.setUnique_id(rs.getInt("unique_id"));
+                dv.setYear(rs.getString("year"));
+                dv.setDividensUsd(rs.getString("dividens_usd"));
+                dv.setValuedividensUsd(rs.getString("value_dividends_usd"));
+                dv.setDividensCop(rs.getString("dividens_cop"));
+                dv.setValueDividensCop(rs.getString("value_dividends_cop"));
                 dividensEntities.add(dv);
             }
-            System.out.println("divide ::: "+dividensEntities);
-
             return dividensEntities;
         } catch (Exception ex) {
-//            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         } finally {
             closeConnection();
@@ -119,15 +111,15 @@ import java.util.List;
         try {
             PreparedStatement Query = connection.prepareStatement(QUERY_FCL);
             Query.setInt(1, id_opportunity);
-            ResultSet rs4 = Query.executeQuery();
-            while (rs4.next()) {
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
                 FclEntity fc = new FclEntity();
-                fc.setUnique_id(rs4.getInt("unique_id"));
-                fc.setYear(rs4.getString("year"));
-                fc.setFclUsd(rs4.getString("fcl_usd"));
-                fc.setValueFclUsd(rs4.getString("value_fcl_usd"));
-                fc.setFclCop(rs4.getString("fcl_cop"));
-                fc.setValueFclCop(rs4.getString("value_fcl_cop"));
+                fc.setUnique_id(rs.getInt("unique_id"));
+                fc.setYear(rs.getString("year"));
+                fc.setFclUsd(rs.getString("fcl_usd"));
+                fc.setValueFclUsd(rs.getString("value_fcl_usd"));
+                fc.setFclCop(rs.getString("fcl_cop"));
+                fc.setValueFclCop(rs.getString("value_fcl_cop"));
                 fclEntities.add(fc);
             }
             System.out.println("fcl ::: "+fclEntities);
@@ -150,22 +142,19 @@ import java.util.List;
         try {
             PreparedStatement Query = connection.prepareStatement(QUERY_FCL_SH);
             Query.setInt(1, id_opportunity);
-            ResultSet rs5 = Query.executeQuery();
-            while (rs5.next()) {
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
                 FclShareholderEntity fca = new FclShareholderEntity();
-                fca.setUnique_id(rs5.getInt("unique_id"));
-                fca.setYear(rs5.getString("year"));
-                fca.setShareholderUsd(rs5.getString("shareholder_usd"));
-                fca.setValueShareUsd(rs5.getString("value_share_usd"));
-                fca.setShareholderCop(rs5.getString("shareholder_cop"));
-                fca.setValueShareCop(rs5.getString("value_share_cop"));
+                fca.setUnique_id(rs.getInt("unique_id"));
+                fca.setYear(rs.getString("year"));
+                fca.setShareholderUsd(rs.getString("shareholder_usd"));
+                fca.setValueShareUsd(rs.getString("value_share_usd"));
+                fca.setShareholderCop(rs.getString("shareholder_cop"));
+                fca.setValueShareCop(rs.getString("value_share_cop"));
                 fclShareholderEntities.add(fca);
             }
-            System.out.println("fcSH::: "+fclShareholderEntities);
-
             return fclShareholderEntities;
         } catch (Exception ex) {
-    //            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         } finally {
             closeConnection();
@@ -180,22 +169,19 @@ import java.util.List;
         try {
             PreparedStatement Query = connection.prepareStatement(QUERY_INCOME);
             Query.setInt(1, id_opportunity);
-            ResultSet rs6 = Query.executeQuery();
-            while (rs6.next()) {
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
                 IncomeEntity inc = new IncomeEntity();
-                inc.setUnique_id(rs6.getInt("unique_id"));
-                inc.setYear(rs6.getString("year"));
-                inc.setIncomeUsd(rs6.getString("income_usd"));
-                inc.setValueIncomeUsd(rs6.getString("value_income_usd"));
-                inc.setIncomeCop(rs6.getString("income_cop"));
-                inc.setValueIncomeCop(rs6.getString("value_income_cop"));
+                inc.setUnique_id(rs.getInt("unique_id"));
+                inc.setYear(rs.getString("year"));
+                inc.setIncomeUsd(rs.getString("income_usd"));
+                inc.setValueIncomeUsd(rs.getString("value_income_usd"));
+                inc.setIncomeCop(rs.getString("income_cop"));
+                inc.setValueIncomeCop(rs.getString("value_income_cop"));
                 incomeEntities.add(inc);
             }
-            System.out.println("income ::: "+incomeEntities);
-
             return incomeEntities;
         } catch (Exception ex) {
-//            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         } finally {
             closeConnection();
@@ -210,23 +196,20 @@ import java.util.List;
         try {
             PreparedStatement Query = connection.prepareStatement(QUERY_TIR_EQUITY);
             Query.setInt(1, id_opportunity);
-            ResultSet rs7 = Query.executeQuery();
-            while (rs7.next()) {
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
                 TirEquityEntity tireq = new TirEquityEntity();
-                tireq.setUnique_id(rs7.getInt("unique_id"));
-                tireq.setYear(rs7.getDate("year"));
-                tireq.setTirEqFig(rs7.getString("tir_equity_figure"));
-                tireq.setTirEqUnit(rs7.getString("tir_equity_unit"));
-                tireq.setTirEqCapital(rs7.getString("tir_equity_capital_structure"));
-                tireq.setTirEqCost(rs7.getString("tir_equity_debt_cost"));
-                tireq.setTirEqAmortizacion(rs7.getString("tir_equity_amortization"));
+                tireq.setUnique_id(rs.getInt("unique_id"));
+                tireq.setYear(rs.getDate("year"));
+                tireq.setTirEqFig(rs.getString("tir_equity_figure"));
+                tireq.setTirEqUnit(rs.getString("tir_equity_unit"));
+                tireq.setTirEqCapital(rs.getString("tir_equity_capital_structure"));
+                tireq.setTirEqCost(rs.getString("tir_equity_debt_cost"));
+                tireq.setTirEqAmortizacion(rs.getString("tir_equity_amortization"));
                 tirEquityEntities.add(tireq);
             }
-            System.out.println("tir Equi::: "+tirEquityEntities);
-
             return tirEquityEntities;
         } catch (Exception ex) {
-    //            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         } finally {
             closeConnection();
@@ -241,30 +224,74 @@ import java.util.List;
         try {
             PreparedStatement Query = connection.prepareStatement(QUERY_TIR_PROJECT);
             Query.setInt(1, id_opportunity);
-            ResultSet rs8 = Query.executeQuery();
-            while (rs8.next()) {
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
                 TirProjectEntity tirproj = new TirProjectEntity();
-                tirproj.setUnique_id(rs8.getInt("unique_id"));
-                tirproj.setYear(rs8.getString("year"));
-                tirproj.setTirprojfigure(rs8.getString("tir_project_figure"));
-                tirproj.setTirprojectunit(rs8.getString("tir_project_unit"));
+                tirproj.setUnique_id(rs.getInt("unique_id"));
+                tirproj.setYear(rs.getString("year"));
+                tirproj.setTirprojfigure(rs.getString("tir_project_figure"));
+                tirproj.setTirprojectunit(rs.getString("tir_project_unit"));
                 tirProjectEntities.add(tirproj);
             }
-            System.out.println("tir projec ::: "+tirProjectEntities);
-
             return tirProjectEntities;
         } catch (Exception ex) {
-//            System.out.println(ex.getMessage(),ex);
             throw new RuntimeException(ex);
         } finally {
             closeConnection();
         }
-
     }
 
 
     @Override
     public List<UtilityEntity> findByUtility(int id_opportunity, ConnectionInfo connectionInfo) {
-        return null;
+        getConnectionSQLServer(connectionInfo);
+        List<UtilityEntity> utilityEntities = new ArrayList<UtilityEntity>();
+
+        try {
+            PreparedStatement Query = connection.prepareStatement(QUERY_UTILITY);
+            Query.setInt(1, id_opportunity);
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
+                UtilityEntity utility = new UtilityEntity();
+                utility.setUnique_id(rs.getInt("unique_id"));
+                utility.setYear(rs.getString("year"));
+                utility.setUtilityUsd(rs.getString("utility_usd"));
+                utility.setValueUtilityUsd(rs.getString("value_utility_usd"));
+                utility.setUtilityCop("utility_cop");
+                utility.setValueUtilityCop("value_utility_cop");
+                utilityEntities.add(utility);
+            }
+            return utilityEntities;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            closeConnection();
+        }
+    }
+
+    @Override
+    public List<TarifEntity> findByTarif(int id_opportunity, ConnectionInfo connectionInfo) {
+        getConnectionSQLServer(connectionInfo);
+        List<TarifEntity> tarifEntities = new ArrayList<TarifEntity>();
+
+        try {
+            PreparedStatement Query = connection.prepareStatement(QUERY_TARIF);
+            Query.setInt(1, id_opportunity);
+            ResultSet rs = Query.executeQuery();
+            while (rs.next()) {
+                TarifEntity tarif = new TarifEntity();
+                tarif.setUnique_id(rs.getInt("unique_id"));
+                tarif.setYear(rs.getString("year"));
+                tarif.setValueTarifUsd(rs.getString("value_tarif_usd"));
+                tarif.setValueTarifCop(rs.getString("value_tarif_cop"));
+
+                tarifEntities.add(tarif);
+            }
+            return tarifEntities;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        } finally {
+            closeConnection();
+        }
     }
 }

@@ -21,15 +21,12 @@ public class OpportunitiesByCountryService {
     public OpportunitiesAllByCountryDto getDataOpportunities(String country)throws NotFoundException {
         OpportunitiesAllByCountryDto opp = new OpportunitiesAllByCountryDto();
 
-
-//        List<OpportunitiesEntity> opportunitiesEntity = opportunitiesAllRepository.findByIdCountry(countryEntity);
-
         SecretPort secretPort = new SecretAdapter();
         ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
         List<OpportunitiesEntity> opportunitiesEntity = repository.findByIdCountry(country,connectionInfo);
-        //corregir estas extracciones
-        opp.setIdpais(opportunitiesEntity.get(0).getIdCountry().getUnique_id());
-        opp.setCountry(opportunitiesEntity.get(0).getIdCountry().getNameContry());
+
+        opp.setId_country(mapToIdcountry(opportunitiesEntity));
+        opp.setCountry(mapTocountry(opportunitiesEntity));
         opp.setListOportunitiesByCountries(mapToOpportunitiesAllDto(opportunitiesEntity));
         return opp;
     }
@@ -48,5 +45,30 @@ public class OpportunitiesByCountryService {
             }
         }
         return listOp;
+    }
+
+    public String mapTocountry(List<OpportunitiesEntity> oppotunities){
+        String country = "";
+        if(oppotunities.size()>0) {
+            for (OpportunitiesEntity listOpp : oppotunities) {
+                if(listOpp!=null){
+                    country = listOpp.getIdCountry().getNameContry();
+                    continue;
+                }
+            }
+        }
+        return country;
+    }
+    public int mapToIdcountry(List<OpportunitiesEntity> oppotunities){
+        int id = 0;
+        if(oppotunities.size()>0) {
+            for (OpportunitiesEntity listOpp : oppotunities) {
+                if(listOpp!=null){
+                    id = listOpp.getIdCountry().getUnique_id();
+                    continue;
+                }
+            }
+        }
+        return id;
     }
 }

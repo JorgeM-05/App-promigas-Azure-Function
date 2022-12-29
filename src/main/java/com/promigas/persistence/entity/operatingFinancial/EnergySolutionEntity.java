@@ -4,17 +4,15 @@ package com.promigas.persistence.entity.operatingFinancial;
 import com.promigas.persistence.entity.OpportunitiesEntity;
 import lombok.Data;
 
-
-
 @Data
 public class EnergySolutionEntity {
 
     private int unique_id;
-    private OpportunitiesEntity idoportunity;
-    private String solenergunit;
-    private String solenergfigure;
-    private String solgenerfigure;
-    private String solgenerunit;
-    private String soldegradation;
-    private String solenerghoursun;
+    private OpportunitiesEntity idOpportunity;
+    private String solEnergyPowerUnit;
+    private String solEnergyPowerFigure;
+    private String solGenerUnit;
+    private String solGenerFigure;
+    private String solDegradation;
+    private String solEnergyHourSun;
 }
