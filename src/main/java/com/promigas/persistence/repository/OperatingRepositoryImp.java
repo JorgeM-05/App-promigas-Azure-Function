@@ -1,13 +1,9 @@
 package com.promigas.persistence.repository;
 
-import com.promigas.domain.dto.ConnectionInfo;
-import com.promigas.persistence.entity.FiguresFinancial.CapexEntity;
-import com.promigas.persistence.entity.FiguresFinancial.IncomeEntity;
-import com.promigas.persistence.entity.OpportunitiesEntity;
+import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.persistence.entity.operatingFinancial.DistributionEntity;
 import com.promigas.persistence.entity.operatingFinancial.EnergySolutionEntity;
 import com.promigas.persistence.entity.operatingFinancial.TransportEntity;
-import io.swagger.v3.oas.annotations.Operation;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

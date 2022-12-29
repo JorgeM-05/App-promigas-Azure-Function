@@ -1,6 +1,6 @@
 package com.promigas.persistence.repository;
 
-import com.promigas.domain.dto.ConnectionInfo;
+import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.persistence.entity.CountryEntity;
 import com.promigas.persistence.entity.OpportunitiesEntity;
 import com.promigas.persistence.entity.SectorEntity;
@@ -9,8 +9,6 @@ import com.promigas.persistence.entity.TypeContractEntity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 

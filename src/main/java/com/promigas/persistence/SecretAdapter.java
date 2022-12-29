@@ -1,7 +1,7 @@
 package com.promigas.persistence;
 
 import com.google.gson.Gson;
-import com.promigas.domain.dto.ConnectionInfo;
+import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.persistence.repository.SecretPort;
 import com.promigas.persistence.repository.SecretRepository;
 import com.promigas.persistence.repository.SecretRepositoryImpl;

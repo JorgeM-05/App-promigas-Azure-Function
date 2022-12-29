@@ -1,6 +1,9 @@
 package com.promigas.service;
 
-import com.promigas.domain.dto.*;
+import com.promigas.domain.dto.request.FilterDtoRequest;
+import com.promigas.domain.dto.response.ConnectionInfo;
+import com.promigas.domain.dto.response.ListOpportunitiesDto;
+import com.promigas.domain.dto.response.ListOpportunitiesFilter;
 import com.promigas.domain.enums.ConstantsEnum;
 import com.promigas.persistence.SecretAdapter;
 import com.promigas.persistence.entity.OpportunitiesEntity;
@@ -14,13 +17,13 @@ public class FilterService {
     private FilterRepository repository = new FilterRepositoryImp();
 
 
-    public ListOpportunitiesFilter getDataOpportunities(String country)throws NotFoundException {
+    public ListOpportunitiesFilter getDataOpportunities(FilterDtoRequest filterDtoRequest)throws NotFoundException {
         ListOpportunitiesFilter opp = new ListOpportunitiesFilter();
 
         SecretPort secretPort = new SecretAdapter();
         ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
 
-        List<OpportunitiesEntity> opportunitiesEntity = repository.findByIdCountry(country,connectionInfo);
+        List<OpportunitiesEntity> opportunitiesEntity = repository.findByIdCountry(filterDtoRequest,connectionInfo);
 
         opp.setListOportunitiesByCountries(mapToOpportunities(opportunitiesEntity));
 
@@ -41,4 +44,5 @@ public class FilterService {
         }
         return listOp;
     }
+
 }

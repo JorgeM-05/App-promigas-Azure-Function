@@ -1,13 +1,10 @@
 package com.promigas.persistence.repository;
 
-import com.promigas.domain.dto.ConnectionInfo;
+import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.domain.enums.LogEnum;
-import com.promigas.domain.enums.MessagesEnum;
-import com.promigas.domain.exception.PromigasException;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.text.MessageFormat;
 
 

@@ -1,16 +1,13 @@
 package com.promigas.service;
 
-import com.promigas.domain.dto.ConnectionInfo;
-import com.promigas.domain.dto.detailOpportunitiesDTO.OpportunitiesByCountryDTO;
-import com.promigas.domain.dto.detailOpportunitiesDTO.OpportunityDetailsDTO;
-import com.promigas.domain.dto.detailOpportunitiesDTO.financial.*;
+import com.promigas.domain.dto.response.ConnectionInfo;
+import com.promigas.domain.dto.response.detailOpportunitiesDTO.OpportunitiesByCountryDTO;
+import com.promigas.domain.dto.response.detailOpportunitiesDTO.OpportunityDetailsDTO;
+import com.promigas.domain.dto.response.detailOpportunitiesDTO.financial.*;
 import com.promigas.domain.enums.ConstantsEnum;
 import com.promigas.persistence.SecretAdapter;
 import com.promigas.persistence.entity.FiguresFinancial.*;
 import com.promigas.persistence.entity.OpportunitiesEntity;
-import com.promigas.persistence.entity.operatingFinancial.DistributionEntity;
-import com.promigas.persistence.entity.operatingFinancial.EnergySolutionEntity;
-import com.promigas.persistence.entity.operatingFinancial.TransportEntity;
 import com.promigas.persistence.repository.*;
 
 import java.util.ArrayList;

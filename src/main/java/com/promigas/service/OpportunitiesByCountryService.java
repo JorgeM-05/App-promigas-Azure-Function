@@ -1,16 +1,14 @@
 package com.promigas.service;
 
-import com.promigas.domain.dto.ConnectionInfo;
-import com.promigas.domain.dto.ListOportunitiesByCountry;
-import com.promigas.domain.dto.OpportunitiesAllByCountryDto;
+import com.promigas.domain.dto.response.ConnectionInfo;
+import com.promigas.domain.dto.response.ListOportunitiesByCountry;
+import com.promigas.domain.dto.response.OpportunitiesAllByCountryDto;
 import com.promigas.domain.enums.ConstantsEnum;
 import com.promigas.persistence.SecretAdapter;
-import com.promigas.persistence.entity.CountryEntity;
 import com.promigas.persistence.entity.OpportunitiesEntity;
 import com.promigas.persistence.repository.OpportunitiesRepository;
 import com.promigas.persistence.repository.SecretPort;
 import com.promigas.persistence.repository.opportunitiesByContryImp;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.webjars.NotFoundException;
 
 import java.util.ArrayList;
