@@ -46,9 +46,9 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
 
                 sectorEntity.setTypeSector(opprs.getString("type_contract"));
                 sectorEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
-
                 typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(22)));
                 typeContractEntity.setTypeContract(opprs.getString("type_sector"));
+
 
                 opp.setIdCountry(countryEntity);
                 opp.setIdSector(sectorEntity);
@@ -85,6 +85,7 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
     @Override
     public OpportunitiesEntity findById(Integer id, ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
+
         OpportunitiesEntity opportunitiesEntities = new OpportunitiesEntity();
 
         try {
@@ -97,12 +98,16 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
                 SectorEntity sectorEntity = new SectorEntity();
                 TypeContractEntity typeContractEntity = new TypeContractEntity();
                 CountryEntity countryEntity = new CountryEntity();
-
-                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(20)));
-                countryEntity.setNameContry(opprs.getString("name_contry"));
+                System.out.println("1.2");
+                countryEntity.setUnique_id(Integer.parseInt(opprs.getString(19)));
+                System.out.println("1.3");
+                countryEntity.setNameContry(opprs.getString("name_country"));
+                System.out.println("1.4");
                 sectorEntity.setTypeSector(opprs.getString("type_contract"));
+
                 typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
                 typeContractEntity.setTypeContract(opprs.getString("type_sector"));
+                System.out.println("1.4");
 
                 opp.setIdCountry(countryEntity);
                 opp.setIdSector(sectorEntity);

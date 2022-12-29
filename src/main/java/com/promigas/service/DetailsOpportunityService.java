@@ -28,7 +28,7 @@ public class DetailsOpportunityService {
 
         SecretPort secretPort = new SecretAdapter();
         ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
-
+        System.out.println("1");
         OpportunitiesEntity opportunities = repository.findById(id_opportunity,connectionInfo);
         System.out.println("-----");
         List<CapexEntity> capexEntities = repositoryFigures.findByCapex(opportunities.getUnique_id(),connectionInfo);

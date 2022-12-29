@@ -14,7 +14,7 @@ public class SecretRepositoryImpl implements SecretRepository{
             connection.setPort("1433");
             connection.setSchema("dpi-promigas");
             connection.setUser("sa");
-            connection.setPwd("root");
+            connection.setPwd("250986Op*");
 
         }
 
