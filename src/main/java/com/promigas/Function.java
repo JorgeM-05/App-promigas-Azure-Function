@@ -9,21 +9,16 @@ import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
 import com.promigas.domain.dto.request.FilterDtoRequest;
-import com.promigas.domain.dto.response.ListOpportunitiesFilter;
-import com.promigas.domain.dto.response.OpportunitiesAllByCountryDto;
-import com.promigas.domain.dto.response.OpportunitiesDto;
-import com.promigas.domain.dto.response.OpportunitiesFilterDTO;
+import com.promigas.domain.dto.response.*;
 import com.promigas.domain.dto.response.detailOpportunitiesDTO.OpportunityDetailsDTO;
-import com.promigas.domain.exception.PromigasException;
 import com.promigas.service.DetailsOpportunityService;
 import com.promigas.service.FilterService;
 import com.promigas.service.OpportunitiesByCountryService;
 import com.promigas.service.OpportunitiesService;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON;
 
 /**
  * Azure Functions with HTTP Trigger.
@@ -48,9 +43,9 @@ public class Function {
 
         OpportunitiesDto opportunitiesDto = opportunitiesService.getDataAllOpportunities();
         if (opportunitiesDto == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body("query string is null").build();
         } else {
-            return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesDto).build();
+            return request.createResponseBuilder(HttpStatus.OK).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body(opportunitiesDto).build();
         }
     }
 
@@ -74,14 +69,14 @@ public class Function {
 
         OpportunitiesAllByCountryDto opportunitiesAllByCountryDto = null;
         if (country == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Error: verify query params ... country :: "+country).build();
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body("Error: verify query params ... country :: "+country).build();
         } else {
             OpportunitiesByCountryService opportunities = new OpportunitiesByCountryService();
             opportunitiesAllByCountryDto = opportunities.getDataOpportunities(country);
             if (opportunitiesAllByCountryDto == null) {
-                return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body("query string is null").build();
             } else {
-                return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesAllByCountryDto).build();
+                return request.createResponseBuilder(HttpStatus.OK).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body(opportunitiesAllByCountryDto).build();
             }
         }
     }
@@ -106,7 +101,7 @@ public class Function {
 
         OpportunityDetailsDTO opportunityDetailsDTO = null;
         if (id == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Error: verify query params ... id :: "+id).build();
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body("Error: verify query params ... id :: "+id).build();
         } else {
             DetailsOpportunityService detailsOpportunityService = new DetailsOpportunityService();
             opportunityDetailsDTO = detailsOpportunityService.getDataOpprt(Integer.parseInt(id));
@@ -137,10 +132,10 @@ public class Function {
 
         OpportunityDetailsDTO opportunityDetailsDTO = null;
         if(request == null){
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Error: verify body request ... object :: "+request).build();
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body("Error: verify body request ... object :: "+request).build();
         }
         else if (filterDTO == null) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).header(CONTENT_TYPE, String.valueOf(APPLICATION_JSON)).body("query string is null").build();
         } else {
             return request.createResponseBuilder(HttpStatus.OK).body(filterDTO).build();
         }
