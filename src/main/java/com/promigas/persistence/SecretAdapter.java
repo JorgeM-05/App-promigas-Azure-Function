@@ -11,6 +11,7 @@ public class SecretAdapter implements SecretPort {
     public ConnectionInfo querySecretConnection(String secretName) {
         SecretRepository repository = new SecretRepositoryImpl();
         String secretValue = repository.querySecret(secretName);
+
         return new Gson().fromJson(secretValue, ConnectionInfo.class);
     }
 }

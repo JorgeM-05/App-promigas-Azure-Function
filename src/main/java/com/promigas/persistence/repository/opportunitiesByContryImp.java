@@ -92,22 +92,17 @@ public class opportunitiesByContryImp extends AbstractRepositoryDatabase impleme
             PreparedStatement oppQuery = connection.prepareStatement(QUERY_OPPORTUNITIES_BY_ID);
             oppQuery.setInt(1, id);
             ResultSet opprs = oppQuery.executeQuery();
-            System.out.println(" opp  " + opprs);
             while (opprs.next()) {
                 OpportunitiesEntity opp = new OpportunitiesEntity();
                 SectorEntity sectorEntity = new SectorEntity();
                 TypeContractEntity typeContractEntity = new TypeContractEntity();
                 CountryEntity countryEntity = new CountryEntity();
-                System.out.println("1.2");
                 countryEntity.setUnique_id(Integer.parseInt(opprs.getString(19)));
-                System.out.println("1.3");
                 countryEntity.setNameContry(opprs.getString("name_country"));
-                System.out.println("1.4");
                 sectorEntity.setTypeSector(opprs.getString("type_contract"));
-
                 typeContractEntity.setUnique_id(Integer.parseInt(opprs.getString(24)));
                 typeContractEntity.setTypeContract(opprs.getString("type_sector"));
-                System.out.println("1.4");
+
 
                 opp.setIdCountry(countryEntity);
                 opp.setIdSector(sectorEntity);

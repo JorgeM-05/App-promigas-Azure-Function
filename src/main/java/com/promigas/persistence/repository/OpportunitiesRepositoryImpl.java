@@ -23,7 +23,7 @@ public class OpportunitiesRepositoryImpl extends AbstractRepositoryDatabase{
     public List<OpportunitiesEntity> findOpportunities(ConnectionInfo connectionInfo) {
         getConnectionSQLServer(connectionInfo);
         List<OpportunitiesEntity> opportunitiesEntity = new ArrayList<OpportunitiesEntity>();
-        System.out.println("1.1");
+
 
         try{
             PreparedStatement oppQuery = connection.prepareStatement(QUERY_OPPORTUNITIES);
