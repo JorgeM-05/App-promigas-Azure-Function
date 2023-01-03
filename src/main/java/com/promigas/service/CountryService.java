@@ -1,0 +1,56 @@
+package com.promigas.service;
+
+import com.promigas.domain.dto.response.ConnectionInfo;
+import com.promigas.domain.dto.response.OpportunitiesAll;
+import com.promigas.domain.dto.response.OpportunitiesDto;
+import com.promigas.domain.enums.ConstantsEnum;
+import com.promigas.persistence.SecretAdapter;
+import com.promigas.persistence.entity.OpportunitiesEntity;
+import com.promigas.persistence.repository.OpportunitiesRepositoryImpl;
+import com.promigas.persistence.repository.SecretPort;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CountryService {
+    public OpportunitiesDto getDataAllOpportunities()  {
+        OpportunitiesDto opportunitiesDto = new OpportunitiesDto();
+        List<OpportunitiesEntity> opportunitiesEntity = new ArrayList<OpportunitiesEntity>();
+
+        SecretPort secretPort = new SecretAdapter();
+        ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
+
+        OpportunitiesRepositoryImpl opportunitiesRepository = new OpportunitiesRepositoryImpl();
+        opportunitiesEntity= opportunitiesRepository.findOpportunities(connectionInfo);
+
+//        opportunitiesDto.setNumberOpportunities(opportunitiesEntity.size());
+//        opportunitiesDto.setNumberGreenfield(countGreen(opportunitiesEntity));
+//        opportunitiesDto.setNumberMYA(countMYA(opportunitiesEntity));
+//        opportunitiesDto.setOpportunitiesByCountries(mapToOpportunitiesDTO(opportunitiesEntity));
+
+        return opportunitiesDto;
+    }
+
+//    public List<OpportunitiesAll> mapToOpportunitiesDTO(
+//            List<OpportunitiesEntity> opportunitiesEntityList)
+//    {
+//        List<OpportunitiesAll> opportunitiesAlls= new ArrayList<OpportunitiesAll>();
+//        List<Integer> id = new ArrayList<>();
+//        int NumOpportunities = 0;
+//        for(OpportunitiesEntity oppor : opportunitiesEntityList) {
+//            if(oppor != null){
+//                OpportunitiesAll opportunitiesAll = new OpportunitiesAll();
+//                if(id.indexOf(oppor.getIdCountry().getUnique_id()) < 0){
+//                    NumOpportunities = countOportunities(opportunitiesEntityList,oppor.getIdCountry().getUnique_id());
+//
+//                    opportunitiesAll.setNumberOpportunity(NumOpportunities);
+//                    opportunitiesAll.setCountry(oppor.getIdCountry().getNameContry());
+//                    opportunitiesAll.setCoordinates(oppor.getCoordinates());
+//                    opportunitiesAll.setUniqid(oppor.getUnique_id());
+//                    opportunitiesAlls.add(opportunitiesAll);
+//                }
+//            }
+//        }
+//        return opportunitiesAlls;
+//    }
+}
