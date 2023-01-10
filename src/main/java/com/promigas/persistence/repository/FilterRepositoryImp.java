@@ -1,15 +1,14 @@
 package com.promigas.persistence.repository;
 
-import com.promigas.domain.dto.request.Country;
+import com.promigas.domain.dto.request.CountryDto;
 import com.promigas.domain.dto.request.FilterDtoRequest;
-import com.promigas.domain.dto.request.Sector;
+import com.promigas.domain.dto.request.SectorDto;
 import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.persistence.entity.OpportunitiesEntity;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class FilterRepositoryImp extends AbstractRepositoryDatabase implements FilterRepository{
@@ -27,7 +26,7 @@ public class FilterRepositoryImp extends AbstractRepositoryDatabase implements F
         List<OpportunitiesEntity> opportunitiesEntities = new ArrayList<>();
 
         countryQuery = mapToQueryCountry(filterDtoRequest.getCountries());
-        sectorQuery = mapToQuerySector(filterDtoRequest.getSectors());
+        sectorQuery = mapToQuerySector(filterDtoRequest.getSectorDtos());
         capexQuery = mapToQueryCapex(filterDtoRequest.getMinCapex(),filterDtoRequest.getMaxCapex());
         greenfieldQuery = filterDtoRequest.getGreenfield();
         mYaQuery = filterDtoRequest.getMya();
@@ -65,11 +64,11 @@ public class FilterRepositoryImp extends AbstractRepositoryDatabase implements F
         }
     }
 
-    public String mapToQueryCountry(List<Country> countries){
+    public String mapToQueryCountry(List<CountryDto> countries){
         String query = "WHERE";
         if(countries.size()>0) {
             boolean ctn=true;
-            for (Country fil : countries) {
+            for (CountryDto fil : countries) {
                 if (fil != null) {
                     if(ctn){
                         query += " c.unique_id = " + fil.getUnique_id();
@@ -84,11 +83,11 @@ public class FilterRepositoryImp extends AbstractRepositoryDatabase implements F
         }
         return query;
     }
-    public String mapToQuerySector(List<Sector> sectors){
+    public String mapToQuerySector(List<SectorDto> sectorDtos){
         String query = "WHERE";
-        if(sectors.size()>0) {
+        if(sectorDtos.size()>0) {
             boolean ctn=true;
-            for (Sector fil : sectors) {
+            for (SectorDto fil : sectorDtos) {
                 if (fil != null) {
                     if(ctn) {
                         query += " s.unique_id = " + fil.getUnique_id();

@@ -8,7 +8,9 @@ import com.microsoft.azure.functions.HttpStatus;
 import com.microsoft.azure.functions.annotation.AuthorizationLevel;
 import com.microsoft.azure.functions.annotation.FunctionName;
 import com.microsoft.azure.functions.annotation.HttpTrigger;
+import com.promigas.domain.dto.request.CountryDto;
 import com.promigas.domain.dto.request.FilterDtoRequest;
+import com.promigas.domain.dto.request.SectorDto;
 import com.promigas.domain.dto.response.ListOpportunitiesFilter;
 import com.promigas.domain.dto.response.OpportunitiesAllByCountryDto;
 import com.promigas.domain.dto.response.OpportunitiesDto;
@@ -257,7 +259,7 @@ public class Function {
     @FunctionName("get-list-countries")
     public HttpResponseMessage getCountry(
             @HttpTrigger(
-                    name = "req",
+                    name = "country",
                     methods = {HttpMethod.GET},
                     authLevel = AuthorizationLevel.ANONYMOUS)
             HttpRequestMessage<Optional<String>> request,
@@ -266,14 +268,33 @@ public class Function {
 
         CountryService countryService = new CountryService();
 
-        OpportunitiesDto opportunitiesDto = countryService.getDataAllOpportunities();
-        if (opportunitiesDto == null) {
+        CountryDto countryDto = countryService.getDataAllCountry();
+        if (countryDto == null) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
         } else {
-            return request.createResponseBuilder(HttpStatus.OK).body(opportunitiesDto).build();
+            return request.createResponseBuilder(HttpStatus.OK).body(countryDto).build();
         }
     }
 
+    @FunctionName("get-list-sector")
+    public HttpResponseMessage getSector(
+            @HttpTrigger(
+                    name = "sector",
+                    methods = {HttpMethod.GET},
+                    authLevel = AuthorizationLevel.ANONYMOUS)
+            HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        context.getLogger().info("Java HTTP trigger processed a request.");
+
+        SectorService sectorService = new SectorService();
+
+        SectorDto sectorDto = sectorService.getDataAllSector();
+        if (sectorDto == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("query string is null").build();
+        } else {
+            return request.createResponseBuilder(HttpStatus.OK).body(sectorDto).build();
+        }
+    }
 
 }
 

@@ -1,44 +1,47 @@
 package com.promigas.service;
 
+
 import com.promigas.domain.dto.request.CountryDto;
+import com.promigas.domain.dto.request.SectorDto;
 import com.promigas.domain.dto.response.ConnectionInfo;
 import com.promigas.domain.dto.response.CountryAll;
-import com.promigas.domain.dto.response.OpportunitiesAll;
-import com.promigas.domain.dto.response.OpportunitiesDto;
+import com.promigas.domain.dto.response.SectorAll;
 import com.promigas.domain.enums.ConstantsEnum;
 import com.promigas.persistence.SecretAdapter;
 import com.promigas.persistence.entity.CountryEntity;
-import com.promigas.persistence.entity.OpportunitiesEntity;
+import com.promigas.persistence.entity.SectorEntity;
 import com.promigas.persistence.repository.CountryRepositoryImp;
-import com.promigas.persistence.repository.OpportunitiesRepositoryImpl;
 import com.promigas.persistence.repository.SecretPort;
+import com.promigas.persistence.repository.SectorRepositoryImp;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountryService {
+public class SectorService {
 
-    public CountryDto getDataAllCountry()  {
-        CountryDto countriesDto = new CountryDto();
-        List<CountryEntity> countriesEntity = new ArrayList<CountryEntity>();
+
+    public SectorDto getDataAllSector()  {
+        SectorDto sectorsDto = new SectorDto();
+        List<SectorEntity> sectorEntities = new ArrayList<SectorEntity>();
 
         SecretPort secretPort = new SecretAdapter();
         ConnectionInfo connectionInfo = secretPort.querySecretConnection(ConstantsEnum.SECRET_SQL_SERVER.getValue());
 
-        CountryRepositoryImp countriesRepository = new CountryRepositoryImp();
-        countriesEntity= countriesRepository.findCountry(connectionInfo);
+        SectorRepositoryImp sectorsRepository = new SectorRepositoryImp();
+        sectorEntities= sectorsRepository.findSector(connectionInfo);
 
 //        countryDto.setNumberCountry(countriesEntity.size());
 //        opportunitiesDto.setNumberGreenfield(countGreen(opportunitiesEntity));
 //        opportunitiesDto.setNumberMYA(countMYA(opportunitiesEntity));
-//          countriesDto.setNameCountry(mapToCountryDto(countriesEntity));
+//          SectorDto.setOpportunitiesByCountries(mapToSectorDto(sectorEntities));
 
-        return countriesDto;
+        return sectorsDto;
     }
 
-    public List<CountryAll> mapToCountryDto(
-               List<CountryEntity> countriesEntityList) {
-        List<CountryAll> countryAlls = new ArrayList<CountryAll>();
+    public List<SectorAll> mapToSectorDto(
+            List<SectorEntity> sectorsEntityList)
+    {
+        List<SectorAll> sectorAlls= new ArrayList<SectorAll>();
         List<Integer> id = new ArrayList<>();
 //        int NumOpportunities = 0;
 //        for(OpportunitiesEntity oppor : opportunitiesEntityList) {
@@ -53,9 +56,10 @@ public class CountryService {
 //                    opportunitiesAll.setUniqid(oppor.getUnique_id());
 //                    opportunitiesAlls.add(opportunitiesAll);
 //                }
-//     }
-//       countryAlls;
+//            }
 
-        return countryAlls;
-    }
+        return null;
 }
+}
+
+
